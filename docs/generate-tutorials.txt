@@ -1,0 +1,69 @@
+RESUMEN
+Este Action genera/actualiza minitutoriales en public/data/tutorials.json desde la API privada GM_APY. El sitio los muestra automáticamente:
+- /tutoriales (todos)
+- /tutoriales/javascript, /python, /html-css, /node, /typescript (nav secundario)
+
+ARCHIVOS CLAVE
+- scripts/generate-tutorials.ts → Lógica de ingestión y normalización
+- public/data/tutorials.json → Fuente de datos que consume el frontend
+- ci/generate-tutorials.yml → Workflow (mover a .github/workflows/ para activarlo)
+
+SECRETO NECESARIO (GitHub → Settings → Secrets → Actions)
+- GM_APY: Endpoint que devuelve minitutoriales (JSON o texto). El script acepta:
+  - Array de objetos o { tutorials: [...] }
+  - Campos aceptados por item: title, excerpt, explain, content, language, tags, date
+  - Si llega texto plano, se parte por líneas con ---
+
+FORMATO INTERNO (tutorials.json)
+{
+  "tutorials": [
+    {
+      "slug": "js-fetch-basico",
+      "title": "...",
+      "excerpt": "...",
+      "explain": "Descripción paso a paso de cómo se compone el código",
+      "content": "<código copiable>",
+      "language": "javascript|python|html|css|ts|node",
+      "tags": ["..."],
+      "date": "ISO-8601"
+    }
+  ]
+}
+
+CLASIFICACIÓN POR LENGUAJE (cómo se enlaza al nav secundario)
+El frontend muestra por páginas dedicadas:
+- /tutoriales/javascript → items con language === "javascript"
+- /tutoriales/python → language === "python"
+- /tutoriales/html-css → language === "html" o "css"
+- /tutoriales/node → language === "node"
+- /tutoriales/typescript → language === "ts"
+El script normaliza synonyms: { js→javascript, typescript→ts, nodejs→node, ... }.
+Si el proveedor devuelve html-css, separar en dos items o usar uno y ajustar language a "html" o "css" según proceda en la fuente.
+
+CÓMO FUNCIONA EL SCRIPT (scripts/generate-tutorials.ts)
+1) Lee public/data/tutorials.json (si no existe, crea estructura vacía).
+2) Hace fetch a GM_APY (Node 20 trae fetch nativo).
+3) Intenta parsear JSON; si no, trocea el texto por bloques para generar items básicos.
+4) Normaliza cada item: slug, title, excerpt, explain, content, language, tags, date.
+5) Upsert por slug (si existe, reemplaza; si no, inserta).
+6) Ordena por fecha descendente y guarda el archivo.
+
+CÓMO SE REFLEJA EN EL SITIO
+- Home: muestra últimos minitutoriales usando tutorials.json.
+- /tutoriales: lista completa.
+- /tutoriales/:lang (nav secundario): filtra según language (ver tabla anterior).
+- Cada tarjeta incluye botón "Ver ejemplo" que abre modal con explain + código.
+
+WORKFLOW (ci/generate-tutorials.yml)
+- Ejecuta en cron (Lunes y Jueves 07:00 UTC) y manual (workflow_dispatch).
+- Instala dependencias con PNPM, ejecuta pnpm generate:tutorials.
+- Hace commit/push de public/data/tutorials.json si hubo cambios.
+
+ACTIVACIÓN DEL ACTION
+- Mueve ci/generate-tutorials.yml a .github/workflows/generate-tutorials.yml (requerido por GitHub Actions).
+- Configura los secretos (GM_APY). El token GITHUB_TOKEN se inyecta automáticamente.
+
+MANTENIMIENTO
+- Si cambian los campos de la API, adapta scripts/generate-tutorials.ts (map de propiedades y normalización de language).
+- Para añadir nuevos lenguajes, agrega rutas y reglas de filtrado en el frontend y amplía normalizeLanguage en el script.
+- Si se desea limitar por cantidad o deduplicar por título, modifica la lógica de upsert (clave slug) y ordenado.
