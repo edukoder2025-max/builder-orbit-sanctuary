@@ -4,6 +4,7 @@ export type Tutorial = {
   slug: string;
   title: string;
   excerpt: string;
+  explain?: string;
   content: string;
   language: "javascript" | "python" | "html" | "css" | "ts" | "node";
   tags: string[];
