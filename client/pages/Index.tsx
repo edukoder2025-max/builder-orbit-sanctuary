@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowRight, Bookmark, Code2, Search, Star } from "lucide-react";
-import { tutorials, categories, Tutorial } from "@/data/tutorials";
+import { ArrowRight, Code2, Search, Star } from "lucide-react";
+import { useTutorials, Tutorial } from "@/hooks/useTutorials";
+import { TutorialCard } from "@/components/TutorialCard";
+import { categories } from "@/data/tutorials";
 
 export default function Index() {
-  const latest = useMemo(() => {
-    return [...tutorials].sort((a, b) => (a.date < b.date ? 1 : -1)).slice(0, 6);
-  }, []);
+  const { latest } = useTutorials();
+  const latest6 = useMemo(() => latest.slice(0, 6), [latest]);
 
   return (
     <div className="min-h-screen">
@@ -86,25 +86,8 @@ export default function Index() {
           </Button>
         </div>
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {latest.map((t: Tutorial) => (
-            <Card key={t.slug} className="group hover:shadow-md transition-shadow">
-              <CardHeader className="pb-3">
-                <CardTitle className="text-xl flex items-start justify-between gap-3">
-                  <Link to={`/tutoriales?slug=${t.slug}`} className="hover:underline decoration-dotted underline-offset-4">
-                    {t.title}
-                  </Link>
-                  <Bookmark className="h-4 w-4 text-muted-foreground group-hover:text-foreground" />
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <p className="text-sm text-muted-foreground line-clamp-2">{t.excerpt}</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {t.tags.slice(0, 3).map((tag) => (
-                    <Badge key={tag} variant="outline">{tag}</Badge>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
+          {latest6.map((t: Tutorial) => (
+            <TutorialCard key={t.slug} t={t} />
           ))}
         </div>
       </section>
