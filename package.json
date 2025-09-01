@@ -18,7 +18,9 @@
     "start": "node dist/server/node-build.mjs",
     "test": "vitest --run",
     "format.fix": "prettier --write .",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "generate:articles": "tsx scripts/generate-articles.ts",
+    "blog:index": "tsx scripts/update-blog-index.ts"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
