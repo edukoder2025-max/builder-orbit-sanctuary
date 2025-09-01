@@ -44,10 +44,7 @@ function ThemeToggle() {
 
 const nav = [
   { to: "/tutoriales", label: "Tutoriales" },
-  { to: "/snippets", label: "Snippets" },
   { to: "/articulos", label: "Artículos" },
-  { to: "/favoritos", label: "Favoritos" },
-  { to: "/perfil", label: "Perfil" },
   { to: "/contacto", label: "Contacto" },
 ];
 
