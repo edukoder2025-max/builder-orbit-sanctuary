@@ -15,6 +15,7 @@ import Perfil from "./pages/Perfil";
 import Contacto from "./pages/Contacto";
 import Favoritos from "./pages/Favoritos";
 import Layout from "./components/site/Layout";
+import TutorialLanguage from "./pages/TutorialLanguage";
 
 const queryClient = new QueryClient();
 
