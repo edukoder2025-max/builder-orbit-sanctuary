@@ -30,9 +30,20 @@ export function TutorialCard({ t }: { t: Tutorial }) {
               <DialogHeader>
                 <DialogTitle>{t.title}</DialogTitle>
               </DialogHeader>
-              <div className="space-y-3">
-                <p className="text-sm text-muted-foreground">{t.excerpt}</p>
-                <pre className="rounded-md bg-muted p-4 text-sm overflow-x-auto"><code>{t.content}</code></pre>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <p className="text-sm text-muted-foreground">{t.excerpt}</p>
+                  {t.explain && (
+                    <div className="text-sm leading-relaxed">
+                      <div className="font-medium">Cómo se compone el código</div>
+                      <p className="text-muted-foreground mt-1 whitespace-pre-wrap">{t.explain}</p>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <div className="text-xs font-medium text-muted-foreground mb-1">Código de ejemplo</div>
+                  <pre className="rounded-md bg-muted p-4 text-sm overflow-x-auto"><code>{t.content}</code></pre>
+                </div>
               </div>
             </DialogContent>
           </Dialog>
