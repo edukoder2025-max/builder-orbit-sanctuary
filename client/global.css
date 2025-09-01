@@ -105,10 +105,17 @@
 
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "liga" 1, "calt" 1;
+    font-feature-settings:
+      "liga" 1,
+      "calt" 1;
   }
 
-  code, pre, kbd, samp {
-    font-family: "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family:
+      "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+      "Liberation Mono", "Courier New", monospace;
   }
 }

@@ -3,7 +3,7 @@ name: Generate Articles (template)
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 8 * * 1'
+    - cron: "0 8 * * 1"
 
 jobs:
   generate:
@@ -22,8 +22,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: "20"
+          cache: "pnpm"
 
       - name: Install deps
         run: pnpm install --no-frozen-lockfile

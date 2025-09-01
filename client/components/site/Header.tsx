@@ -15,7 +15,8 @@ function ThemeToggle() {
     const root = document.documentElement;
     const isDark =
       theme === "dark" ||
-      (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      (theme === "system" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches);
     root.classList.toggle("dark", isDark);
     localStorage.setItem("theme", theme);
   }, [theme]);
@@ -56,7 +57,9 @@ export default function Header() {
     <header className="sticky top-0 z-40 w-full border-b bg-background/80 backdrop-blur">
       <div className="container h-16 flex items-center gap-4">
         <Link to="/" className="font-extrabold tracking-tight text-xl">
-          <span className="bg-gradient-to-r from-sky-600 to-cyan-500 bg-clip-text text-transparent">Edu</span>
+          <span className="bg-gradient-to-r from-sky-600 to-cyan-500 bg-clip-text text-transparent">
+            Edu
+          </span>
           Koder
         </Link>
         <nav className="hidden md:flex items-center gap-1">
@@ -66,7 +69,8 @@ export default function Header() {
               to={n.to}
               className={cn(
                 "rounded-md px-3 py-2 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-                location.pathname.startsWith(n.to) && "bg-accent text-accent-foreground",
+                location.pathname.startsWith(n.to) &&
+                  "bg-accent text-accent-foreground",
               )}
             >
               {n.label}

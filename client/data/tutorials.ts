@@ -57,7 +57,8 @@ export const tutorials: Tutorial[] = [
   {
     slug: "ts-tipos-basicos",
     title: "Tipos básicos en TypeScript",
-    excerpt: "Declara tipos para variables y funciones para evitar errores en tiempo de compilación.",
+    excerpt:
+      "Declara tipos para variables y funciones para evitar errores en tiempo de compilación.",
     content:
       "type User = { id:number; name:string }\nconst u: User = { id: 1, name: 'Ana' }\nfunction square(n: number): number { return n*n }",
     language: "ts",
@@ -77,8 +78,10 @@ export const tutorials: Tutorial[] = [
   {
     slug: "js-arrays-map",
     title: "Map sobre arrays",
-    excerpt: "Transforma cada elemento de un array de forma sencilla con Array.prototype.map.",
-    content: "const arr = [1,2,3]\nconst dobles = arr.map(n => n*2)\nconsole.log(dobles)",
+    excerpt:
+      "Transforma cada elemento de un array de forma sencilla con Array.prototype.map.",
+    content:
+      "const arr = [1,2,3]\nconst dobles = arr.map(n => n*2)\nconsole.log(dobles)",
     language: "javascript",
     tags: ["arrays", "map", "funcional"],
     date: new Date(Date.now() - 1000 * 60 * 60 * 36).toISOString(),

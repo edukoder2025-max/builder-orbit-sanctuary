@@ -27,7 +27,8 @@ export default function Index() {
                 Aprende programación en pasos cortos y simples
               </h1>
               <p className="mt-4 text-lg text-muted-foreground max-w-prose">
-                EduKoder es una biblioteca de minitutoriales, recetas y artículos para aprender con ejemplos claros y código copiable.
+                EduKoder es una biblioteca de minitutoriales, recetas y
+                artículos para aprender con ejemplos claros y código copiable.
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-3">
                 <Button asChild size="lg">
@@ -42,8 +43,13 @@ export default function Index() {
               </div>
               <div className="mt-6 relative max-w-xl">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input placeholder="Busca: bucles, APIs, arrays..." className="pl-10" />
-                <p className="mt-2 text-xs text-muted-foreground">Búsqueda inteligente con autocompletado</p>
+                <Input
+                  placeholder="Busca: bucles, APIs, arrays..."
+                  className="pl-10"
+                />
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Búsqueda inteligente con autocompletado
+                </p>
               </div>
               <div className="mt-6 flex flex-wrap gap-2">
                 {categories.slice(0, 6).map((c) => (
@@ -61,14 +67,20 @@ export default function Index() {
                   </div>
                   <div>
                     <p className="font-semibold">Ejemplo rápido</p>
-                    <p className="text-sm text-muted-foreground">Fetch en JavaScript</p>
+                    <p className="text-sm text-muted-foreground">
+                      Fetch en JavaScript
+                    </p>
                   </div>
                 </div>
-                <pre className="mt-4 rounded-md bg-muted p-4 text-sm overflow-x-auto"><code>{`fetch('https://api.example.com/data')
+                <pre className="mt-4 rounded-md bg-muted p-4 text-sm overflow-x-auto">
+                  <code>{`fetch('https://api.example.com/data')
   .then(r => r.json())
   .then(console.log)
-  .catch(console.error);`}</code></pre>
-                <div className="mt-3 text-xs text-muted-foreground">Copiable y probado</div>
+  .catch(console.error);`}</code>
+                </pre>
+                <div className="mt-3 text-xs text-muted-foreground">
+                  Copiable y probado
+                </div>
               </div>
             </div>
           </div>
@@ -78,11 +90,17 @@ export default function Index() {
       <section className="container py-14">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight">Últimos minitutoriales</h2>
-            <p className="text-muted-foreground">De 2 a 5 minutos de lectura, con código y ejemplo funcional.</p>
+            <h2 className="text-2xl font-bold tracking-tight">
+              Últimos minitutoriales
+            </h2>
+            <p className="text-muted-foreground">
+              De 2 a 5 minutos de lectura, con código y ejemplo funcional.
+            </p>
           </div>
           <Button asChild variant="ghost">
-            <Link to="/tutoriales" className="inline-flex items-center gap-1">Ver todos <ArrowRight className="h-4 w-4" /></Link>
+            <Link to="/tutoriales" className="inline-flex items-center gap-1">
+              Ver todos <ArrowRight className="h-4 w-4" />
+            </Link>
           </Button>
         </div>
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -96,10 +114,17 @@ export default function Index() {
         <div className="rounded-lg border bg-card p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <h3 className="text-xl font-semibold">Newsletter semanal</h3>
-            <p className="text-muted-foreground">Suscríbete para recibir minitutoriales y recetas rápidas.</p>
+            <p className="text-muted-foreground">
+              Suscríbete para recibir minitutoriales y recetas rápidas.
+            </p>
           </div>
           <form action="#" className="w-full sm:w-auto flex gap-2">
-            <Input type="email" placeholder="tu@email.com" required className="w-full sm:w-72" />
+            <Input
+              type="email"
+              placeholder="tu@email.com"
+              required
+              className="w-full sm:w-72"
+            />
             <Button type="submit">Suscribirme</Button>
           </form>
         </div>

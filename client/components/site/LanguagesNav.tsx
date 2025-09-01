@@ -20,7 +20,8 @@ export default function LanguagesNav() {
             to={`/tutoriales/${l.slug}`}
             className={cn(
               "rounded-md px-3 py-1.5 text-sm font-medium hover:bg-accent hover:text-accent-foreground",
-              pathname.startsWith(`/tutoriales/${l.slug}`) && "bg-accent text-accent-foreground",
+              pathname.startsWith(`/tutoriales/${l.slug}`) &&
+                "bg-accent text-accent-foreground",
             )}
           >
             {l.label}
