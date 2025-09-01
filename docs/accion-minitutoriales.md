@@ -10,6 +10,7 @@ Este proyecto carga los minitutoriales desde `public/data/tutorials.json`. Cada 
   "slug": "js-fetch-basico",
   "title": "...",
   "excerpt": "...",
+  "explain": "Descripción de cómo se compone el código (paso a paso)",
   "content": "...",
   "language": "javascript|python|html|css|ts|node",
   "tags": ["..."],
@@ -20,6 +21,12 @@ Este proyecto carga los minitutoriales desde `public/data/tutorials.json`. Cada 
 - El sitio mostrará automáticamente las nuevas tarjetas en:
   - /tutoriales (todas)
   - /tutoriales/javascript, /tutoriales/python, /tutoriales/html-css, /tutoriales/node, /tutoriales/typescript
+
+### Instrucciones para el prompt de generación (recomendado)
+Incluye en el prompt al proveedor (GM_APY) lo siguiente:
+- Genera minitutoriales cortos con: título, excerpt de 1–2 líneas, explain con 3–6 pasos que describan la composición del código, y el código de ejemplo listo para copiar.
+- Devuelve también el lenguaje ("javascript", "python", "html", "css", "ts" o "node"), tags y una fecha ISO.
+- Mantén el explain en texto plano legible (sin HTML), con listas numeradas o párrafos.
 
 ## Pasos para configurarlo
 1) Mover el workflow a la carpeta de Actions (ACL nos impidió hacerlo automáticamente):
