@@ -5,6 +5,9 @@ on:
   schedule:
     - cron: "0 7 * * 1,4"
 
+permissions:
+  contents: write
+
 jobs:
   generate-tutorials:
     runs-on: ubuntu-latest
