@@ -29,6 +29,7 @@ const App = () => (
           <Route element={<Layout />}>
             <Route path="/" element={<Index />} />
             <Route path="/tutoriales" element={<Tutorials />} />
+            <Route path="/tutoriales/:lang" element={<TutorialLanguage />} />
             <Route path="/snippets" element={<Snippets />} />
             <Route path="/articulos" element={<Blog />} />
             <Route path="/favoritos" element={<Favoritos />} />
