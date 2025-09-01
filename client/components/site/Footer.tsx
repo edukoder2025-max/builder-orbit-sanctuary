@@ -7,7 +7,8 @@ export default function Footer() {
         <div>
           <div className="font-extrabold tracking-tight text-lg">EduKoder</div>
           <p className="mt-2 text-sm text-muted-foreground max-w-sm">
-            Minitutoriales y artículos para aprender programación de forma rápida y práctica.
+            Minitutoriales y artículos para aprender programación de forma
+            rápida y práctica.
           </p>
         </div>
         <div>
