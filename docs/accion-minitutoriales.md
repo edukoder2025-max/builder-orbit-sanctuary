@@ -67,6 +67,7 @@ async function main(){
       slug,
       title,
       excerpt: String(it.excerpt||it.summary||''),
+      explain: String(it.explain||it.explanation||''),
       content: String(it.content||''),
       language: lang as any,
       tags: Array.isArray(it.tags)? it.tags : [],
