@@ -1,6 +1,20 @@
 {
   "articles": [
     {
+      "slug": "guia-practica-ruteo-con-react-router-1756784915168",
+      "title": "Guía práctica: ruteo con React Router",
+      "date": "2025-09-02T03:48:35.168Z",
+      "tags": [
+        "programación",
+        "frontend"
+      ],
+      "excerpt": "En este artículo exploramos ruteo con React Router con un enfoque práctico y ejemplos claros que puedes aplicar de inmediato en tus proyectos.",
+      "imageUrl": "/placeholder.svg",
+      "imageAlt": "Imagen de programación",
+      "author": "creado por edukoder",
+      "link": "/blog/guia-practica-ruteo-con-react-router-1756784915168.html"
+    },
+    {
       "slug": "guia-practica-patrones-de-diseno-en-javascript-1756784800709",
       "title": "Guía práctica: patrones de diseño en JavaScript",
       "date": "2025-09-02T03:46:40.709Z",
