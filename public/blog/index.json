@@ -1,3 +1,18 @@
 {
-  "articles": []
+  "articles": [
+    {
+      "slug": "guia-practica-patrones-de-diseno-en-javascript-1756784800709",
+      "title": "Guía práctica: patrones de diseño en JavaScript",
+      "date": "2025-09-02T03:46:40.709Z",
+      "tags": [
+        "programación",
+        "frontend"
+      ],
+      "excerpt": "En este artículo exploramos patrones de diseño en JavaScript con un enfoque práctico y ejemplos claros que puedes aplicar de inmediato en tus proyectos.",
+      "imageUrl": "/placeholder.svg",
+      "imageAlt": "Imagen de programación",
+      "author": "creado por edukoder",
+      "link": "/blog/guia-practica-patrones-de-diseno-en-javascript-1756784800709.html"
+    }
+  ]
 }
