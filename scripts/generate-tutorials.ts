@@ -30,29 +30,71 @@ function normalizeLanguage(
   if (["js", "javascript", "ecmascript"].includes(x)) return "javascript";
   if (["ts", "typescript"].includes(x)) return "ts";
   if (["py", "python"].includes(x)) return "python";
-  if (["html"].includes(x)) return "html";
-  if (["css"].includes(x)) return "css";
+  if (["html", "html-css", "html5"].includes(x)) return "html";
+  if (["css", "tailwind"].includes(x)) return "css";
   if (["node", "nodejs", "node.js"].includes(x)) return "node";
   return "javascript";
 }
 
+async function safeFetch(url: string) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10000);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    clearTimeout(timeout);
+    return res;
+  } catch (e) {
+    clearTimeout(timeout);
+    throw e;
+  }
+}
+
 async function main() {
-  const endpoint = process.env.GM_APY;
-  if (!endpoint) {
-    console.log("GM_APY not set, skipping tutorial generation.");
+  const endpointRaw = (process.env.GM_APY || "").trim();
+  if (!endpointRaw || endpointRaw === "***") {
+    console.log("GM_APY not set or masked (***), skipping tutorial generation.");
     return;
   }
+
+  // Validate URL to avoid ERR_INVALID_URL in undici
+  let endpoint = "";
+  try {
+    endpoint = new URL(endpointRaw).toString();
+  } catch {
+    console.log(`GM_APY is not a valid URL: ${endpointRaw}. Skipping.`);
+    return;
+  }
+
   const db = readJson();
   const map = new Map<string, any>(db.tutorials.map((t) => [t.slug, t]));
 
-  const res = await fetch(endpoint);
-  const text = await res.text();
+  // Try POST first (provider may accept prompts/options); fallback to GET
+  let text = "";
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 12000);
+    let res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ type: "tutorials", limit: 50 }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    if (!res.ok) {
+      res = await safeFetch(endpoint);
+    }
+    text = await res.text();
+  } catch {
+    const res = await safeFetch(endpoint);
+    text = await res.text();
+  }
+
   let items: any[] = [];
   try {
     const parsed = JSON.parse(text);
     items = Array.isArray(parsed)
       ? parsed
-      : parsed.tutorials || parsed.items || [];
+      : parsed.tutorials || parsed.items || parsed.data || [];
   } catch {
     items = text
       .split(/\n-{3,}\n/g)
@@ -60,9 +102,9 @@ async function main() {
   }
 
   for (const it of items) {
-    const title = String(it.title || it.heading || "Minitutorial");
+    const title = String(it.title || it.heading || "Minitutorial").trim();
     const slug = slugify(String(it.slug || title));
-    const language = normalizeLanguage(String(it.language || "javascript"));
+    const language = normalizeLanguage(String(it.language || it.lang || "javascript"));
     const nowIso = new Date().toISOString();
     const t = {
       slug,
