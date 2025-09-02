@@ -10,6 +10,16 @@ export default function Footer() {
             Minitutoriales y artículos para aprender programación de forma
             rápida y práctica.
           </p>
+          <div className="mt-4 text-sm">
+            <div>
+              <span className="font-medium">Email:</span>{" "}
+              <a className="hover:underline" href="mailto:edukoder2025@gmail.com">edukoder2025@gmail.com</a>
+            </div>
+            <div>
+              <span className="font-medium">Tel:</span>{" "}
+              <a className="hover:underline" href="tel:+543541237972">+54 3541237972</a>
+            </div>
+          </div>
         </div>
         <div>
           <div className="font-semibold">Secciones</div>
