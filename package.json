@@ -22,7 +22,8 @@
     "generate:articles": "tsx scripts/generate-articles.ts",
     "blog:index": "tsx scripts/update-blog-index.ts",
     "generate:tutorials": "tsx scripts/generate-tutorials.ts",
-    "blog:reseed": "tsx scripts/reseed-blog.ts"
+    "blog:reseed": "tsx scripts/reseed-blog.ts",
+    "sitemap": "tsx scripts/generate-sitemap.ts"
   },
   "dependencies": {
     "dotenv": "^17.2.1",

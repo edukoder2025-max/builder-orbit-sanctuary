@@ -41,6 +41,11 @@ jobs:
       - name: Build blog index
         run: pnpm blog:index
 
+      - name: Generate sitemap
+        env:
+          SITE_URL: https://edukoder.com
+        run: pnpm sitemap
+
       - name: Commit and push changes
         env:
           GIT_AUTHOR_NAME: github-actions[bot]
@@ -53,7 +58,7 @@ jobs:
             git config --global user.name "github-actions[bot]"
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add -A
-            git commit -m "chore(blog): auto-generate articles and update index [skip ci]"
+            git commit -m "chore(blog): auto-generate articles, index and sitemap [skip ci]"
             git push
           else
             echo "No changes to commit"

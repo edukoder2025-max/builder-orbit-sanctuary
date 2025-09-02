@@ -574,6 +574,9 @@ function htmlTemplate(params: {
   const metaDescFull = (excerpt || '').replace(/\s+/g, ' ').trim();
   const metaDesc = metaDescFull.length > 160 ? `${metaDescFull.slice(0, 157)}…` : metaDescFull;
 
+  const canonical = `https://edukoder.com/blog/${slug}.html`;
+  const absImage = /^https?:\/\//.test(imageUrl) ? imageUrl : `https://edukoder.com${imageUrl}`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -584,7 +587,7 @@ function htmlTemplate(params: {
       "@type": "Person",
       "name": author
     },
-    "image": imageUrl,
+    "image": absImage,
     "publisher": {
       "@type": "Organization",
       "name": "Edukoder",
@@ -595,7 +598,7 @@ function htmlTemplate(params: {
     },
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://edukoder.com/blog/${slug}.html`
+      "@id": canonical
     }
   };
 
@@ -607,6 +610,7 @@ function htmlTemplate(params: {
   <title>${title} | Edukoder Blog</title>
   <meta name="description" content="${metaDesc.replace(/"/g, '&quot;')}" />
   <meta name="author" content="${author}" />
+  <link rel="canonical" href="${canonical}" />
   
   <!-- EK favicon consistent across pages -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ffffff'/%3E%3Ctext x='16' y='46' font-family='Segoe UI,Inter,Arial,sans-serif' font-weight='800' font-size='36' fill='%230ea5e9'%3EE%3C/text%3E%3Ctext x='34' y='46' font-family='Segoe UI,Inter,Arial,sans-serif' font-weight='800' font-size='36' fill='%23111827'%3EK%3C/text%3E%3C/svg%3E" />
@@ -620,8 +624,8 @@ function htmlTemplate(params: {
   <meta property="og:type" content="article" />
   <meta property="og:title" content="${title}" />
   <meta property="og:description" content="${metaDesc.replace(/"/g, '&quot;')}" />
-  <meta property="og:image" content="${imageUrl}" />
-  <meta property="og:url" content="https://edukoder.com/blog/${slug}.html" />
+  <meta property="og:image" content="${absImage}" />
+  <meta property="og:url" content="${canonical}" />
   <meta property="og:site_name" content="Edukoder Blog" />
   <meta property="article:published_time" content="${date}" />
   ${tags.map(tag => `<meta property="article:tag" content="${tag}" />`).join('\n  ')}
@@ -630,7 +634,7 @@ function htmlTemplate(params: {
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${title}" />
   <meta name="twitter:description" content="${metaDesc.replace(/"/g, '&quot;')}" />
-  <meta name="twitter:image" content="${imageUrl}" />
+  <meta name="twitter:image" content="${absImage}" />
   
   <!-- Schema.org -->
   <script type="application/ld+json">
@@ -838,7 +842,7 @@ function htmlTemplate(params: {
       </div>
       
       <img 
-        src="${imageUrl}" 
+        src="${absImage}" 
         alt="${imageAlt}" 
         class="featured-image"
         loading="lazy"
