@@ -159,7 +159,7 @@ function randomTopic() {
   return topics[Math.floor(Math.random() * topics.length)];
 }
 
-const PROMPT = `Escribe un artículo técnico detallado y completo sobre "{{TOPIC}}" con un mínimo de 2000 palabras. El artículo debe seguir esta estructura detallada:
+const PROMPT = `Escribe un artículo técnico muy detallado y completo sobre "{{TOPIC}}" con una extensión objetivo entre 2500 y 3500 palabras (mínimo 2500). El artículo debe seguir esta estructura detallada:
 
 # {{TITLE}}
 
@@ -255,12 +255,47 @@ async function fetchFromProvider(prompt: string) {
   return null;
 }
 
+function isLikelyHTML(str: string) {
+  return /<\w+[^>]*>/.test(str);
+}
+
+function basicMarkdownToHtml(md: string) {
+  let html = md
+    .replace(/```([\s\S]*?)```/g, (_m, code) => `\n<pre><code>${code.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</code></pre>\n`)
+    .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/^##\s+(.+)$/gm, '<h2>$1</h2>')
+    .replace(/^#\s+(.+)$/gm, '<h2>$1</h2>');
+
+  html = html
+    .split(/\n\s*\n/g)
+    .map((block) => {
+      if (/^<h[23]>/.test(block) || /^<pre>/.test(block)) return block;
+      return `<p>${block.replace(/\n/g, ' ')}</p>`;
+    })
+    .join('\n\n');
+
+  return html;
+}
+
+function toPlainText(htmlOrMd: string) {
+  const s = isLikelyHTML(htmlOrMd) ? htmlOrMd : basicMarkdownToHtml(htmlOrMd);
+  return s
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function wordCount(text: string) {
+  return text.split(/\s+/).filter(Boolean).length;
+}
+
 function localArticle(topic: string) {
   const title = `Guía completa: ${topic}`;
   const slug = slugify(title + ' ' + Date.now());
   const date = new Date().toISOString();
   
-  // Generate a more comprehensive article structure
   const sections = [
     {
       title: 'Introducción',
@@ -352,12 +387,10 @@ console.log(resultado);</code></pre>
     }
   ];
 
-  // Generate the full content
   const content = sections.map(section => 
     `<h2>${section.title}</h2>\n${section.content}`
   ).join('\n\n');
 
-  // Generate a more detailed excerpt
   const excerpt = `Guía completa sobre ${topic.toLowerCase()}. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para implementar ${topic.toLowerCase()} en tus proyectos de desarrollo de software.`;
 
   return {
@@ -375,13 +408,11 @@ console.log(resultado);</code></pre>
 }
 
 async function fetchPexelsImage(query: string) {
-  // Try multiple possible environment variable names for Pexels API key
   const key = process.env.PEXELS_API_KEY || 
               process.env.PEXELS_API || 
               process.env.PEXELS ||
               process.env.NEXT_PUBLIC_PEXELS_API_KEY;
   
-  // Default fallback if no API key is found
   if (!key) {
     console.warn('No Pexels API key found. Using placeholder image.');
     return { 
@@ -391,32 +422,38 @@ async function fetchPexelsImage(query: string) {
     };
   }
 
-  try {
-    // Create a more specific query by adding "programming" and limiting to tech-related terms
-    const searchQuery = `programming ${query}`.substring(0, 100); // Ensure query is not too long
-    
+  // Programming-related keywords (ES + EN)
+  const progKeywords = [
+    'programming', 'programación', 'code', 'código', 'developer', 'desarrollador',
+    'software', 'computer', 'computadora', 'laptop', 'terminal', 'IDE', 'keyboard',
+    'pantalla', 'editor', 'tech', 'technology', 'tecnología', 'coding'
+  ];
+
+  async function searchOnce(q: string) {
     const url = new URL("https://api.pexels.com/v1/search");
-    url.searchParams.set("query", searchQuery);
-    url.searchParams.set("per_page", "15");
+    url.searchParams.set("query", q.substring(0, 100));
+    url.searchParams.set("per_page", "30");
     url.searchParams.set("orientation", "landscape");
-    url.searchParams.set("size", "medium"); // Prefer medium size for better loading
+    url.searchParams.set("size", "medium");
+
+    console.log(`Fetching Pexels image for query: ${q}`);
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 7000);
     
-    console.log(`Fetching Pexels image for query: ${searchQuery}`);
-    
-    const res = await fetch(url.toString(), { 
-      headers: { 
-        'Authorization': key,
-        'User-Agent': 'Edukoder/1.0 (https://edukoder.com)'
-      },
-      // Add timeout to prevent hanging
-      signal: AbortSignal.timeout(5000)
+    const res = await fetch(url.toString(), {
+      headers: {
+        Authorization: key,
+      } as Record<string, string>,
+      signal: controller.signal,
     });
-    
+    clearTimeout(timeout);
+
     if (!res.ok) {
       console.error(`Pexels API error: ${res.status} ${res.statusText}`);
       throw new Error(`Pexels API returned ${res.status}`);
     }
-    
+
     const data = await res.json() as { photos?: Array<{
       src: {
         landscape?: string;
@@ -427,35 +464,65 @@ async function fetchPexelsImage(query: string) {
       photographer?: string;
       photographer_url?: string;
     }> };
-    
-    const photos = Array.isArray(data.photos) ? data.photos : [];
-    
-    if (photos.length === 0) {
-      console.warn('No photos found for query:', searchQuery);
+
+    return Array.isArray(data.photos) ? data.photos : [];
+  }
+
+  try {
+    // Build a strong programming-focused query
+    const focus = [
+      'programming', 'code', 'developer', 'software', 'computer', 'laptop', 'terminal'
+    ];
+    const baseTerms = (query || '').split(/\s+/).filter(Boolean).slice(0, 5);
+    const combined = Array.from(new Set([ ...focus, ...baseTerms, 'programación', 'código' ])).join(' ');
+
+    let photos = await searchOnce(combined);
+
+    // Filter by alt text to ensure relevance
+    const kwSet = new Set(progKeywords.map(k => k.toLowerCase()));
+    function isRelevant(alt?: string) {
+      if (!alt) return false;
+      const a = alt.toLowerCase();
+      for (const k of kwSet) {
+        if (a.includes(k)) return true;
+      }
+      return false;
+    }
+
+    let relevant = photos.filter(p => isRelevant(p.alt));
+
+    // Retry with stricter query if none relevant
+    if (relevant.length === 0) {
+      const strictQuery = 'programming code developer software computer laptop terminal';
+      photos = await searchOnce(strictQuery);
+      relevant = photos.filter(p => isRelevant(p.alt));
+    }
+
+    const pool = relevant.length > 0 ? relevant : photos;
+
+    if (pool.length === 0) {
+      console.warn('No photos found for programming-related query.');
       return { 
         url: "/placeholder.svg", 
         alt: `Imagen de ${query}`,
         credit: ""
       };
     }
-    
-    // Randomly select a photo from the results
-    const photo = photos[Math.floor(Math.random() * photos.length)];
-    
-    // Prefer landscape, then large, then original
+
+    // Pick randomly from the filtered pool
+    const photo = pool[Math.floor(Math.random() * pool.length)];
+
     const imageUrl = photo.src?.landscape || 
                     photo.src?.large || 
                     photo.src?.original || 
                     "/placeholder.svg";
-    
-    // Create alt text and photo credit
     const alt = photo.alt || `Imagen relacionada con ${query}`;
     const credit = photo.photographer 
       ? `Foto de ${photo.photographer} en Pexels`
       : "";
-    
+
     console.log(`Selected image: ${imageUrl}`);
-    
+
     return { 
       url: imageUrl, 
       alt,
@@ -503,11 +570,15 @@ function htmlTemplate(params: {
     day: 'numeric'
   });
 
+  // Meta description should be concise for SEO (around 150-160 chars)
+  const metaDescFull = (excerpt || '').replace(/\s+/g, ' ').trim();
+  const metaDesc = metaDescFull.length > 160 ? `${metaDescFull.slice(0, 157)}…` : metaDescFull;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": title,
-    "description": excerpt,
+    "description": metaDesc,
     "datePublished": date,
     "author": {
       "@type": "Person",
@@ -534,13 +605,21 @@ function htmlTemplate(params: {
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>${title} | Edukoder Blog</title>
-  <meta name="description" content="${excerpt.replace(/"/g, '&quot;')}" />
+  <meta name="description" content="${metaDesc.replace(/"/g, '&quot;')}" />
   <meta name="author" content="${author}" />
+  
+  <!-- EK favicon consistent across pages -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23ffffff'/%3E%3Ctext x='16' y='46' font-family='Segoe UI,Inter,Arial,sans-serif' font-weight='800' font-size='36' fill='%230ea5e9'%3EE%3C/text%3E%3Ctext x='34' y='46' font-family='Segoe UI,Inter,Arial,sans-serif' font-weight='800' font-size='36' fill='%23111827'%3EK%3C/text%3E%3C/svg%3E" />
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <!-- Google AdSense (Auto Ads) -->
+  <meta name="google-adsense-account" content="ca-pub-5704376838710588" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5704376838710588" crossorigin="anonymous"></script>
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article" />
   <meta property="og:title" content="${title}" />
-  <meta property="og:description" content="${excerpt.replace(/"/g, '&quot;')}" />
+  <meta property="og:description" content="${metaDesc.replace(/"/g, '&quot;')}" />
   <meta property="og:image" content="${imageUrl}" />
   <meta property="og:url" content="https://edukoder.com/blog/${slug}.html" />
   <meta property="og:site_name" content="Edukoder Blog" />
@@ -550,7 +629,7 @@ function htmlTemplate(params: {
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="${title}" />
-  <meta name="twitter:description" content="${excerpt.replace(/"/g, '&quot;')}" />
+  <meta name="twitter:description" content="${metaDesc.replace(/"/g, '&quot;')}" />
   <meta name="twitter:image" content="${imageUrl}" />
   
   <!-- Schema.org -->
@@ -785,17 +864,36 @@ async function main() {
   ensureDir(BLOG_DIR);
 
   const topic = randomTopic();
-  const prompt = PROMPT.replace("{{TOPIC}}", topic);
+  const prompt = PROMPT.replace("{{TOPIC}}", topic).replace("{{TITLE}}", `Guía completa: ${topic}`);
 
   const provider = await fetchFromProvider(prompt);
-  const base = provider ?? localArticle(topic);
+  let base = provider ?? localArticle(topic);
+
+  let rawContent = String(base.content || base.html || base.body || "");
+  if (!rawContent) {
+    console.warn("Provider returned empty content. Falling back to local article.");
+    base = localArticle(topic);
+    rawContent = base.content;
+  }
+
+  const contentHtml = isLikelyHTML(rawContent) ? rawContent : basicMarkdownToHtml(rawContent);
+  const plain = toPlainText(contentHtml);
+
+  const minWords = 2200; // exigir un mínimo alto para artículos extensos
+  if (wordCount(plain) < minWords) {
+    console.warn(`Content too short (words=${wordCount(plain)}). Using local full template.`);
+    base = localArticle(topic);
+  } else {
+    base = { ...base, content: contentHtml };
+  }
 
   const title = String(base.title || `Artículo sobre ${topic}`);
   const slug = slugify(title + " " + Date.now());
   const date = new Date().toISOString();
   const content = String(base.content || "");
+
   const excerpt = String(
-    base.excerpt || content.replace(/<[^>]+>/g, "").slice(0, 180),
+    base.excerpt || toPlainText(content).slice(0, 220)
   );
   const tags = Array.isArray(base.tags)
     ? base.tags

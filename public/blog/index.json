@@ -1,54 +1,37 @@
 {
   "articles": [
     {
-      "slug": "guia-practica-buenas-practicas-de-seguridad-en-apis-mas-alla-de-lo-basico-1756842912768",
-      "title": "Guía práctica: Buenas prácticas de seguridad en APIs: Más allá de lo básico | Edukoder Blog",
-      "date": "2025-09-02T20:03:19.595Z",
+      "slug": "guia-completa-seguridad-en-la-cadena-de-suministro-de-software-1756845710309",
+      "title": "Guía completa: Seguridad en la cadena de suministro de software | Edukoder Blog",
+      "date": "2025-09-02T20:41:54.788Z",
       "tags": [],
-      "excerpt": "En este artículo exploramos Buenas prácticas de seguridad en APIs: Más allá de lo básico con un enfoque práctico y ejemplos claros que puedes aplicar de inmediato en tus proyectos.",
+      "excerpt": "Guía completa sobre seguridad en la cadena de suministro de software. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para implem…",
       "imageUrl": "",
       "imageAlt": "",
       "author": "",
-      "link": "/blog/guia-practica-buenas-practicas-de-seguridad-en-apis-mas-alla-de-lo-basico-1756842912768.html"
+      "link": "/blog/guia-completa-seguridad-en-la-cadena-de-suministro-de-software-1756845710309.html"
     },
     {
-      "slug": "guia-completa-proteccion-contra-ataques-de-inyeccion-mas-alla-de-los-orms-1756843398449",
-      "title": "Guía completa: Protección contra ataques de inyección: Más allá de los ORMs | Edukoder Blog",
-      "date": "2025-09-02T20:03:19.594Z",
+      "slug": "guia-completa-patrones-de-diseno-avanzados-en-aplicaciones-empresariales-con-react-1756845703573",
+      "title": "Guía completa: Patrones de diseño avanzados en aplicaciones empresariales con React | Edukoder Blog",
+      "date": "2025-09-02T20:41:54.787Z",
       "tags": [],
-      "excerpt": "Guía completa sobre protección contra ataques de inyección: más allá de los orms. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para implementar protección contra ataques de inyección: más allá de los orms en tus proyectos de desarrollo de software.",
+      "excerpt": "Guía completa sobre patrones de diseño avanzados en aplicaciones empresariales con react. Aprende los conceptos fundamentales, mejores prácticas y ejemplos p…",
       "imageUrl": "",
       "imageAlt": "",
       "author": "",
-      "link": "/blog/guia-completa-proteccion-contra-ataques-de-inyeccion-mas-alla-de-los-orms-1756843398449.html"
+      "link": "/blog/guia-completa-patrones-de-diseno-avanzados-en-aplicaciones-empresariales-con-react-1756845703573.html"
     },
     {
-      "slug": "guia-practica-ruteo-con-react-router-1756784915168",
-      "title": "Guía práctica: ruteo con React Router",
-      "date": "2025-09-02T03:48:35.168Z",
-      "tags": [
-        "programación",
-        "frontend"
-      ],
-      "excerpt": "En este artículo exploramos ruteo con React Router con un enfoque práctico y ejemplos claros que puedes aplicar de inmediato en tus proyectos.",
-      "imageUrl": "/placeholder.svg",
-      "imageAlt": "Imagen de programación",
-      "author": "creado por edukoder",
-      "link": "/blog/guia-practica-ruteo-con-react-router-1756784915168.html"
-    },
-    {
-      "slug": "guia-practica-patrones-de-diseno-en-javascript-1756784800709",
-      "title": "Guía práctica: patrones de diseño en JavaScript",
-      "date": "2025-09-02T03:46:40.709Z",
-      "tags": [
-        "programación",
-        "frontend"
-      ],
-      "excerpt": "En este artículo exploramos patrones de diseño en JavaScript con un enfoque práctico y ejemplos claros que puedes aplicar de inmediato en tus proyectos.",
-      "imageUrl": "/placeholder.svg",
-      "imageAlt": "Imagen de programación",
-      "author": "creado por edukoder",
-      "link": "/blog/guia-practica-patrones-de-diseno-en-javascript-1756784800709.html"
+      "slug": "guia-completa-patrones-de-acceso-a-datos-repository-dao-y-mas-1756845707327",
+      "title": "Guía completa: Patrones de acceso a datos: Repository, DAO y más | Edukoder Blog",
+      "date": "2025-09-02T20:41:54.783Z",
+      "tags": [],
+      "excerpt": "Guía completa sobre patrones de acceso a datos: repository, dao y más. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para imple…",
+      "imageUrl": "",
+      "imageAlt": "",
+      "author": "",
+      "link": "/blog/guia-completa-patrones-de-acceso-a-datos-repository-dao-y-mas-1756845707327.html"
     }
   ]
 }
