@@ -29,6 +29,21 @@ jobs:
       - name: Install deps
         run: pnpm install --no-frozen-lockfile
 
+      - name: Validate GM_APY URL
+        env:
+          GM_APY: ${{ secrets.GM_APY }}
+        run: |
+          node -e "
+          const v = process.env.GM_APY;
+          try {
+            const u = new URL(v);
+            console.log('GM_APY OK. host=%s path=%s', u.host, u.pathname);
+          } catch (e) {
+            console.log('GM_APY inválido. Debe ser URL absoluta con http(s)://');
+            process.exit(1);
+          }
+          "
+
       - name: Generate tutorials from GM_APY
         env:
           GM_APY: ${{ secrets.GM_APY }}

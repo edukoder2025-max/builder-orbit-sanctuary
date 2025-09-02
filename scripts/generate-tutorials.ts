@@ -56,12 +56,15 @@ async function main() {
     return;
   }
 
-  // Validate URL to avoid ERR_INVALID_URL in undici
+  // Accept inputs without scheme by defaulting to https:// and then validate
+  const hasScheme = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(endpointRaw);
+  const candidate = hasScheme ? endpointRaw : `https://${endpointRaw}`;
+
   let endpoint = "";
   try {
-    endpoint = new URL(endpointRaw).toString();
+    endpoint = new URL(candidate).toString();
   } catch {
-    console.log(`GM_APY is not a valid URL: ${endpointRaw}. Skipping.`);
+    console.log(`GM_APY is not a valid URL: ***. Skipping.`);
     return;
   }
 
