@@ -13,6 +13,7 @@ import Tutorials from "./pages/Tutorials";
 import Contacto from "./pages/Contacto";
 import Layout from "./components/site/Layout";
 import TutorialLanguage from "./pages/TutorialLanguage";
+import ComprarEbook from "./pages/ComprarEbook";
 
 const queryClient = new QueryClient();
 
