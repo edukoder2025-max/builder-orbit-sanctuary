@@ -1,9 +1,9 @@
-name: Generate Articles (template)
+name: Generate Articles
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 8 * * 1"
+    - cron: "0 8 * * 1"  # Runs every Monday at 8:00 AM
 
 permissions:
   contents: write
@@ -32,7 +32,11 @@ jobs:
       - name: Generate articles
         env:
           GM_APY: ${{ secrets.GM_APY }}
-        run: pnpm generate:articles
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PEXELS_API: ${{ secrets.PEXELS_API_KEY }}  # For backward compatibility
+        run: |
+          echo "PEXELS_API_KEY=${PEXELS_API_KEY:0:4}...${PEXELS_API_KEY: -4}"  # Log first and last 4 chars for verification
+          pnpm generate:articles
 
       - name: Build blog index
         run: pnpm blog:index
@@ -46,9 +50,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -n "$(git status --porcelain)" ]; then
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add -A
-            git commit -m "chore(blog): auto-generate articles and update index"
+            git commit -m "chore(blog): auto-generate articles and update index [skip ci]"
             git push
           else
-            echo "No changes"
+            echo "No changes to commit"
           fi

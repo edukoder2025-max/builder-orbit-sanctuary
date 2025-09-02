@@ -256,27 +256,122 @@ async function fetchFromProvider(prompt: string) {
 }
 
 function localArticle(topic: string) {
-  const title = `Guía práctica: ${topic}`;
-  const paragraphs = [
-    `En este artículo exploramos ${topic} con un enfoque práctico y ejemplos claros que puedes aplicar de inmediato en tus proyectos.`,
-    `Para empezar, define objetivos medibles y establece una base sólida: estructura del proyecto, convenciones y herramientas que permitan mantener el código limpio y predecible.`,
-    `A continuación, crea pequeñas unidades de trabajo y verifica resultados con pruebas automatizadas. Ajusta gradualmente para mejorar legibilidad, rendimiento y seguridad.`,
-    `Cierra con una breve revisión del impacto: mide, documenta y comparte aprendizajes para consolidar buenas prácticas en el equipo.`,
+  const title = `Guía completa: ${topic}`;
+  const slug = slugify(title + ' ' + Date.now());
+  const date = new Date().toISOString();
+  
+  // Generate a more comprehensive article structure
+  const sections = [
+    {
+      title: 'Introducción',
+      content: `
+        <p>En el mundo del desarrollo de software moderno, ${topic.toLowerCase()} se ha convertido en un aspecto fundamental para garantizar la calidad, seguridad y mantenibilidad de nuestras aplicaciones. Este artículo tiene como objetivo proporcionarte una guía completa y práctica sobre este tema crucial.</p>
+        <p>A lo largo de este artículo, exploraremos los conceptos fundamentales, mejores prácticas y ejemplos concretos que te permitirán dominar ${topic.toLowerCase()} en tus proyectos de desarrollo.</p>
+      `
+    },
+    {
+      title: 'Conceptos Fundamentales',
+      content: `
+        <p>Antes de sumergirnos en la implementación, es esencial comprender los conceptos clave relacionados con ${topic.toLowerCase()}:</p>
+        <ul>
+          <li><strong>Definición</strong>: Explicación clara del concepto principal.</li>
+          <li><strong>Importancia</strong>: Por qué este tema es relevante en el desarrollo actual.</li>
+          <li><strong>Beneficios</strong>: Ventajas de implementar correctamente estas prácticas.</li>
+          <li><strong>Desafíos comunes</strong>: Problemas frecuentes y cómo abordarlos.</li>
+        </ul>
+      `
+    },
+    {
+      title: 'Implementación Práctica',
+      content: `
+        <p>Vamos a ver un ejemplo práctico de cómo implementar ${topic.toLowerCase()} en un proyecto real:</p>
+        <pre><code class="language-javascript">// Ejemplo de implementación
+const implementar${topic.replace(/\s+/g, '')} = (parametros) => {
+  // Código de ejemplo
+  console.log("Implementando: " + "${topic}");
+  
+  // Lógica principal
+  const resultado = {
+    exito: true,
+    mensaje: "${topic} implementado correctamente",
+    timestamp: new Date().toISOString()
+  };
+  
+  return resultado;
+};
+
+// Uso del ejemplo
+const resultado = implementar${topic.replace(/\s+/g, '')}();
+console.log(resultado);</code></pre>
+      `
+    },
+    {
+      title: 'Mejores Prácticas',
+      content: `
+        <p>Para aprovechar al máximo ${topic.toLowerCase()}, te recomendamos seguir estas mejores prácticas:</p>
+        <ol>
+          <li><strong>Documentación clara</strong>: Mantén una documentación actualizada.</li>
+          <li><strong>Pruebas exhaustivas</strong>: Implementa pruebas unitarias y de integración.</li>
+          <li><strong>Seguridad</strong>: Sigue los principios de seguridad básicos.</li>
+          <li><strong>Rendimiento</strong>: Optimiza el código para un mejor rendimiento.</li>
+          <li><strong>Mantenibilidad</strong>: Escribe código limpio y fácil de mantener.</li>
+        </ol>
+      `
+    },
+    {
+      title: 'Casos de Uso Reales',
+      content: `
+        <p>${topic} se aplica en diversos escenarios del desarrollo de software. Algunos ejemplos incluyen:</p>
+        <ul>
+          <li>Desarrollo de APIs RESTful</li>
+          <li>Aplicaciones web escalables</li>
+          <li>Sistemas distribuidos</li>
+          <li>Plataformas en la nube</li>
+          <li>Aplicaciones móviles</li>
+        </ul>
+      `
+    },
+    {
+      title: 'Conclusión',
+      content: `
+        <p>En este artículo hemos explorado en profundidad ${topic.toLowerCase()}, desde sus conceptos fundamentales hasta su implementación práctica. Como hemos visto, dominar este tema es esencial para cualquier desarrollador que busque crear aplicaciones robustas, seguras y mantenibles.</p>
+        <p>Te animamos a seguir profundizando en este tema y a aplicar estos conceptos en tus proyectos. Si tienes alguna pregunta o comentario, no dudes en compartirlo en la sección de comentarios.</p>
+      `
+    },
+    {
+      title: 'Recursos Adicionales',
+      content: `
+        <p>Para seguir aprendiendo sobre ${topic.toLowerCase()}, te recomendamos los siguientes recursos:</p>
+        <ul>
+          <li><a href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer">Documentación oficial de MDN Web Docs</a></li>
+          <li><a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">FreeCodeCamp - Cursos gratuitos</a></li>
+          <li><a href="https://www.udemy.com/" target="_blank" rel="noopener noreferrer">Cursos en Udemy</a></li>
+          <li><a href="https://github.com/" target="_blank" rel="noopener noreferrer">Proyectos de código abierto en GitHub</a></li>
+        </ul>
+      `
+    }
   ];
-  const code = `// Ejemplo breve\nfunction ejemplo() {\n  return "Hola, buenas prácticas";\n}`;
-  const content = `
-<h2>Introducción</h2>
-<p>${paragraphs[0]}</p>
-<h2>Fundamentos</h2>
-<p>${paragraphs[1]}</p>
-<h2>Iteración y validación</h2>
-<p>${paragraphs[2]}</p>
-<pre><code>${code}</code></pre>
-<h2>Conclusiones</h2>
-<p>${paragraphs[3]}</p>
-`;
-  const excerpt = `${paragraphs[0]}`.slice(0, 180);
-  return { title, content, excerpt, tags: ["programación", "frontend"] };
+
+  // Generate the full content
+  const content = sections.map(section => 
+    `<h2>${section.title}</h2>\n${section.content}`
+  ).join('\n\n');
+
+  // Generate a more detailed excerpt
+  const excerpt = `Guía completa sobre ${topic.toLowerCase()}. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para implementar ${topic.toLowerCase()} en tus proyectos de desarrollo de software.`;
+
+  return {
+    title,
+    content,
+    excerpt,
+    slug,
+    date,
+    tags: [topic.split(':')[0].trim(), 'programación', 'desarrollo web', 'tutorial'],
+    author: 'Equipo de Desarrollo',
+    imageUrl: '/placeholder.svg',
+    imageAlt: `Imagen representativa de ${topic.toLowerCase()}`,
+    readingTime: `${Math.ceil(content.split(' ').length / 200)} min read`
+  };
 }
 
 async function fetchPexelsImage(query: string) {
