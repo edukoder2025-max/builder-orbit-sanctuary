@@ -13,7 +13,9 @@ function ensureDir(dir: string) {
 function tryReadHtmlMetadata(p: string) {
   try {
     const raw = fs.readFileSync(p, "utf8");
-    const m = raw.match(/<script[^>]*id=["']article-metadata["'][^>]*>([\s\S]*?)<\/script>/i);
+    const m = raw.match(
+      /<script[^>]*id=["']article-metadata["'][^>]*>([\s\S]*?)<\/script>/i,
+    );
     if (m && m[1]) {
       const meta = JSON.parse(m[1].trim());
       return {
@@ -29,7 +31,10 @@ function tryReadHtmlMetadata(p: string) {
       };
     }
     const t = raw.match(/<title>([^<]+)<\/title>/i)?.[1] || path.parse(p).name;
-    const d = raw.match(/<meta[^>]*name=["']description["'][^>]*content=["']([^"']*)["'][^>]*>/i)?.[1] || "";
+    const d =
+      raw.match(
+        /<meta[^>]*name=["']description["'][^>]*content=["']([^"']*)["'][^>]*>/i,
+      )?.[1] || "";
     return {
       slug: path.parse(p).name,
       title: t,
@@ -75,7 +80,9 @@ function buildIndex() {
 
   const map = new Map<string, any>();
   [...fromMd, ...fromHtml].forEach((a) => map.set(a.slug, a));
-  const articles = Array.from(map.values()).sort((a, b) => (a.date < b.date ? 1 : -1));
+  const articles = Array.from(map.values()).sort((a, b) =>
+    a.date < b.date ? 1 : -1,
+  );
 
   fs.writeFileSync(INDEX_FILE, JSON.stringify({ articles }, null, 2));
   return articles.length;

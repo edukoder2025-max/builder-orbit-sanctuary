@@ -71,7 +71,12 @@ async function fetchFromProvider(prompt: string) {
       const parsed = JSON.parse(text);
       if (Array.isArray(parsed)) return parsed[0] ?? null;
       if (parsed && typeof parsed === "object") {
-        const arr = (parsed.articles || parsed.items || parsed.data || []).filter(Boolean);
+        const arr = (
+          parsed.articles ||
+          parsed.items ||
+          parsed.data ||
+          []
+        ).filter(Boolean);
         if (arr.length) return arr[0];
         return parsed;
       }
@@ -105,11 +110,12 @@ function localArticle(topic: string) {
 <p>${paragraphs[3]}</p>
 `;
   const excerpt = `${paragraphs[0]}`.slice(0, 180);
-  return { title, content, excerpt, tags: ["programación", "frontend" ] };
+  return { title, content, excerpt, tags: ["programación", "frontend"] };
 }
 
 async function fetchPexelsImage(query: string) {
-  const key = process.env.PEXELS_API || process.env.PEXELS_API_KEY || process.env.PEXELS;
+  const key =
+    process.env.PEXELS_API || process.env.PEXELS_API_KEY || process.env.PEXELS;
   if (!key) {
     return { url: "/placeholder.svg", alt: "Imagen de programación" };
   }
@@ -122,9 +128,14 @@ async function fetchPexelsImage(query: string) {
     if (!res.ok) throw new Error(String(res.status));
     const data: any = await res.json();
     const photos = Array.isArray(data.photos) ? data.photos : [];
-    if (!photos.length) return { url: "/placeholder.svg", alt: "Imagen de programación" };
+    if (!photos.length)
+      return { url: "/placeholder.svg", alt: "Imagen de programación" };
     const pick = photos[Math.floor(Math.random() * photos.length)];
-    const src = pick.src?.landscape || pick.src?.large || pick.src?.original || "/placeholder.svg";
+    const src =
+      pick.src?.landscape ||
+      pick.src?.large ||
+      pick.src?.original ||
+      "/placeholder.svg";
     const alt = pick.alt || `Foto relacionada con ${query}`;
     return { url: src, alt };
   } catch {
@@ -143,7 +154,17 @@ function htmlTemplate(params: {
   slug: string;
   tags: string[];
 }) {
-  const { title, author, date, content, imageUrl, imageAlt, excerpt, slug, tags } = params;
+  const {
+    title,
+    author,
+    date,
+    content,
+    imageUrl,
+    imageAlt,
+    excerpt,
+    slug,
+    tags,
+  } = params;
   const jsonLd = {
     slug,
     title,
@@ -216,7 +237,9 @@ async function main() {
   const slug = slugify(title + " " + Date.now());
   const date = new Date().toISOString();
   const content = String(base.content || "");
-  const excerpt = String(base.excerpt || content.replace(/<[^>]+>/g, "").slice(0, 180));
+  const excerpt = String(
+    base.excerpt || content.replace(/<[^>]+>/g, "").slice(0, 180),
+  );
   const tags = Array.isArray(base.tags)
     ? base.tags
     : String(base.tags || "programación, frontend")
@@ -224,7 +247,9 @@ async function main() {
         .map((s: string) => s.trim())
         .filter(Boolean);
 
-  const { url: imageUrl, alt: imageAlt } = await fetchPexelsImage(`programación ${topic}`);
+  const { url: imageUrl, alt: imageAlt } = await fetchPexelsImage(
+    `programación ${topic}`,
+  );
 
   const html = htmlTemplate({
     title,
@@ -254,7 +279,11 @@ async function main() {
     author: "creado por edukoder",
     link: `/blog/${slug}.html`,
   });
-  writeIndex({ articles: Array.from(map.values()).sort((a, b) => (a.date < b.date ? 1 : -1)) });
+  writeIndex({
+    articles: Array.from(map.values()).sort((a, b) =>
+      a.date < b.date ? 1 : -1,
+    ),
+  });
 
   console.log(`Generated article: ${title} -> ${outFile}`);
 }
