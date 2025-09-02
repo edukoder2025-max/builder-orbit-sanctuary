@@ -3,13 +3,24 @@
     {
       "slug": "guia-practica-buenas-practicas-de-seguridad-en-apis-mas-alla-de-lo-basico-1756842912768",
       "title": "Guía práctica: Buenas prácticas de seguridad en APIs: Más allá de lo básico | Edukoder Blog",
-      "date": "2025-09-02T19:55:13.895Z",
+      "date": "2025-09-02T20:03:19.595Z",
       "tags": [],
       "excerpt": "En este artículo exploramos Buenas prácticas de seguridad en APIs: Más allá de lo básico con un enfoque práctico y ejemplos claros que puedes aplicar de inmediato en tus proyectos.",
       "imageUrl": "",
       "imageAlt": "",
       "author": "",
       "link": "/blog/guia-practica-buenas-practicas-de-seguridad-en-apis-mas-alla-de-lo-basico-1756842912768.html"
+    },
+    {
+      "slug": "guia-completa-proteccion-contra-ataques-de-inyeccion-mas-alla-de-los-orms-1756843398449",
+      "title": "Guía completa: Protección contra ataques de inyección: Más allá de los ORMs | Edukoder Blog",
+      "date": "2025-09-02T20:03:19.594Z",
+      "tags": [],
+      "excerpt": "Guía completa sobre protección contra ataques de inyección: más allá de los orms. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para implementar protección contra ataques de inyección: más allá de los orms en tus proyectos de desarrollo de software.",
+      "imageUrl": "",
+      "imageAlt": "",
+      "author": "",
+      "link": "/blog/guia-completa-proteccion-contra-ataques-de-inyeccion-mas-alla-de-los-orms-1756843398449.html"
     },
     {
       "slug": "guia-practica-ruteo-con-react-router-1756784915168",
