@@ -1,6 +1,17 @@
 {
   "articles": [
     {
+      "slug": "guia-practica-buenas-practicas-de-seguridad-en-apis-mas-alla-de-lo-basico-1756842912768",
+      "title": "Guía práctica: Buenas prácticas de seguridad en APIs: Más allá de lo básico | Edukoder Blog",
+      "date": "2025-09-02T19:55:13.895Z",
+      "tags": [],
+      "excerpt": "En este artículo exploramos Buenas prácticas de seguridad en APIs: Más allá de lo básico con un enfoque práctico y ejemplos claros que puedes aplicar de inmediato en tus proyectos.",
+      "imageUrl": "",
+      "imageAlt": "",
+      "author": "",
+      "link": "/blog/guia-practica-buenas-practicas-de-seguridad-en-apis-mas-alla-de-lo-basico-1756842912768.html"
+    },
+    {
       "slug": "guia-practica-ruteo-con-react-router-1756784915168",
       "title": "Guía práctica: ruteo con React Router",
       "date": "2025-09-02T03:48:35.168Z",
