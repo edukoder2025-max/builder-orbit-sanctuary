@@ -18,6 +18,50 @@ export function createServer() {
     res.json({ message: ping });
   });
 
+  // Hero image (Pexels) — proxy to avoid exposing API key on client
+  app.get("/api/hero-image", async (req, res) => {
+    try {
+      const key = process.env.PEXELS_API_KEY || process.env.PEXELS_API || process.env.PEXELS;
+      if (!key) {
+        return res.json({ url: "/placeholder.svg", alt: "Imagen de programación", credit: "" });
+      }
+
+      const q = String(req.query.q || "programming code developer software computer laptop terminal");
+      const url = new URL("https://api.pexels.com/v1/search");
+      url.searchParams.set("query", q.slice(0, 100));
+      url.searchParams.set("per_page", "30");
+      url.searchParams.set("orientation", "landscape");
+      url.searchParams.set("size", "medium");
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 7000);
+      const r = await fetch(url.toString(), {
+        headers: { Authorization: key } as Record<string, string>,
+        signal: controller.signal,
+      });
+      clearTimeout(timeout);
+
+      if (!r.ok) {
+        return res.json({ url: "/placeholder.svg", alt: "Imagen de programación", credit: "" });
+      }
+
+      const data = (await r.json()) as { photos?: Array<{ src?: { landscape?: string; large?: string; original?: string }; alt?: string; photographer?: string }> };
+      const photos = Array.isArray(data.photos) ? data.photos : [];
+      if (photos.length === 0) {
+        return res.json({ url: "/placeholder.svg", alt: "Imagen de programación", credit: "" });
+      }
+
+      const photo = photos[Math.floor(Math.random() * photos.length)];
+      const imageUrl = photo?.src?.landscape || photo?.src?.large || photo?.src?.original || "/placeholder.svg";
+      const alt = photo?.alt || "Imagen relacionada con programación";
+      const credit = photo?.photographer ? `Foto de ${photo.photographer} en Pexels` : "";
+
+      res.json({ url: imageUrl, alt, credit });
+    } catch (e) {
+      res.json({ url: "/placeholder.svg", alt: "Imagen de programación", credit: "" });
+    }
+  });
+
   app.get("/api/demo", handleDemo);
 
   // Orders / Payments

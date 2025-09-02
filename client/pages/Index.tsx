@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,11 +11,32 @@ import { categories } from "@/data/tutorials";
 export default function Index() {
   const { latest } = useTutorials();
   const latest6 = useMemo(() => latest.slice(0, 6), [latest]);
+  const [hero, setHero] = useState<{ url: string; alt: string; credit: string }>({ url: "", alt: "", credit: "" });
+
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        const res = await fetch("/api/hero-image");
+        const data = await res.json();
+        if (mounted && data && data.url) setHero({ url: data.url, alt: data.alt || "", credit: data.credit || "" });
+      } catch {
+        // silent fallback
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   return (
     <div className="min-h-screen">
-      <section className="relative overflow-hidden border-b">
-        <div className="absolute inset-0 bg-gradient-to-br from-sky-100/80 via-cyan-50 to-white dark:from-sky-900/20 dark:via-cyan-900/10 dark:to-transparent" />
+      <section
+        className="relative overflow-hidden border-b"
+        style={hero.url ? { backgroundImage: `url(${hero.url})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+        aria-label={hero.alt || "Imagen de fondo relacionada con programación"}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-white/85 via-cyan-50/75 to-white/85 dark:from-black/70 dark:via-cyan-900/30 dark:to-black/70" />
         <div className="container relative py-20 lg:py-28">
           <div className="grid md:grid-cols-2 gap-10 items-center">
             <div>
@@ -84,6 +105,11 @@ export default function Index() {
               </div>
             </div>
           </div>
+          {hero.credit ? (
+            <div className="mt-4 text-xs text-muted-foreground">
+              {hero.credit}
+            </div>
+          ) : null}
         </div>
       </section>
 
