@@ -34,6 +34,11 @@ export default function Footer() {
                 Artículos
               </Link>
             </li>
+            <li>
+              <Link to="/comprar-ebook" className="hover:underline">
+                Comprar eBook
+              </Link>
+            </li>
           </ul>
         </div>
         <div>
