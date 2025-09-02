@@ -7,7 +7,8 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "server/node-build.ts"),
       name: "server",
-      fileName: "production",
+      // Emit a file named `node-build.mjs` so the `start` script can run it directly
+      fileName: "node-build",
       formats: ["es"],
     },
     outDir: "dist/server",
