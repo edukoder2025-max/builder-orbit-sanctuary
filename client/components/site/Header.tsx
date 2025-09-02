@@ -1,9 +1,9 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 import { Moon, SunMedium, Search } from "lucide-react";
 import { useEffect, useState } from "react";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 function ThemeToggle() {
   const [theme, setTheme] = useState<string>(() =>
