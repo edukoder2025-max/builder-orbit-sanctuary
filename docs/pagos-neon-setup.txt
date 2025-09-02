@@ -1,0 +1,46 @@
+Guía para finalizar la vinculación y activar el sistema de pago (Neon + API de órdenes)
+
+Resumen
+- Este proyecto ya crea órdenes (monto USD 29) y las guarda en Neon (Postgres) mediante /api/orders.
+- Falta conectar la base de datos Neon y, opcionalmente, integrar una pasarela de pago (ej. Stripe) para marcar la orden como “paid”.
+
+1) Crear proyecto y base de datos en Neon
+- Crea una cuenta en https://neon.tech y un proyecto con una base de datos.
+- Obtén la cadena de conexión (postgres://usuario:password@host:port/db?sslmode=require).
+
+2) Conectar Neon en este proyecto
+- Recomendado: usa la integración MCP de Neon en Builder.io.
+  • Abre [Open MCP popover] y “Connect to Neon”.
+  • Copia tu cadena de conexión.
+- Alternativa: configura la variable de entorno DATABASE_URL o NEON_DATABASE_URL en el entorno de ejecución (no la guardes en el repo).
+
+3) Establecer la variable de entorno
+- Establece DATABASE_URL (o NEON_DATABASE_URL) con tu cadena de conexión.
+- En Builder.io, usa la configuración de variables de entorno del servidor de desarrollo en lugar de .env para evitar comprometer secretos.
+
+4) Esquema y migraciones
+- El servidor crea automáticamente la tabla orders si no existe al iniciar (bootstrap). No necesitas ejecutar SQL manual.
+- Índices básicos se crean para email y created_at.
+
+5) Probar el flujo
+- Endpoint crear orden: POST /api/orders
+  Body JSON: { "name": "Tu Nombre", "email": "tu@email.com" }
+  Respuesta: { ok: true, order: { id, status: "pending", ... } }
+- Endpoint consultar orden: GET /api/orders/:id
+- UI: visita /comprar-ebook, completa el formulario y se generará la orden “pending”.
+
+6) Marcar pagos (opcional, recomendado)
+- Integra Stripe u otra pasarela en el backend:
+  a) Crear Payment Intent (Stripe) con amount=2900 (cents) y currency=USD.
+  b) Confirmar el pago en el cliente (Stripe Elements/Checkout) o servidor.
+  c) En webhook de la pasarela, al confirmar pago, actualizar la orden a status="paid".
+- Crea un endpoint seguro (ej.: POST /api/webhooks/stripe) que verifique la firma del webhook y ejecute UPDATE orders SET status='paid' WHERE id=... .
+
+7) Producción y despliegue
+- Usa Netlify o Vercel MCP para desplegar (recomendado). Configura DATABASE_URL en variables de entorno del proveedor.
+- Ejecuta las pruebas en el entorno de producción y valida que /comprar-ebook crea órdenes y que el webhook cambia el estado a “paid”.
+
+Notas de seguridad
+- Nunca expongas secrets en el repositorio.
+- Valida entradas (ya se hace con Zod) y usa SSL (Neon usa SSL por defecto).
+- Implementa verificación de firma en webhooks (Stripe-Signature) si integras pasarela.

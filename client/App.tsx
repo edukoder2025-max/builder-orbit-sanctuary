@@ -13,6 +13,7 @@ import Tutorials from "./pages/Tutorials";
 import Contacto from "./pages/Contacto";
 import Layout from "./components/site/Layout";
 import TutorialLanguage from "./pages/TutorialLanguage";
+import ComprarEbook from "./pages/ComprarEbook";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/tutoriales/:lang" element={<TutorialLanguage />} />
             <Route path="/articulos" element={<Blog />} />
             <Route path="/contacto" element={<Contacto />} />
+            <Route path="/comprar-ebook" element={<ComprarEbook />} />
           </Route>
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
