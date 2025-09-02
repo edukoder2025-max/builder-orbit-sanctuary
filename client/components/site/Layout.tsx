@@ -1,15 +1,16 @@
-import Header from "./Header";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
+import { AppSidebar } from "./SiteSidebar";
 
 export default function Layout() {
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      <Header />
-      <main className="flex-1">
-        <Outlet />
-      </main>
-      <Footer />
+    <div className="min-h-screen bg-background text-foreground">
+      <AppSidebar>
+        <main>
+          <Outlet />
+        </main>
+        <Footer />
+      </AppSidebar>
     </div>
   );
 }
