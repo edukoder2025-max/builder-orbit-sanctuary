@@ -48,7 +48,9 @@ export default function Header() {
       <div className="container h-16 flex items-center gap-3">
         <SidebarTrigger />
         <Link to="/" className="font-extrabold tracking-tight text-xl">
-          <span className="bg-gradient-to-r from-sky-600 to-cyan-500 bg-clip-text text-transparent">Edu</span>
+          <span className="bg-gradient-to-r from-sky-600 to-cyan-500 bg-clip-text text-transparent">
+            Edu
+          </span>
           Koder
         </Link>
         <div className="ml-auto flex items-center gap-2">

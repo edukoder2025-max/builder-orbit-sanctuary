@@ -15,12 +15,20 @@ import {
   SidebarSeparator,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { Search, BookOpen, Home, Newspaper, Mail, ShoppingCart } from "lucide-react";
+import {
+  Search,
+  BookOpen,
+  Home,
+  Newspaper,
+  Mail,
+  ShoppingCart,
+} from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 export function AppSidebar({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const isActive = (to: string) => (location.pathname === to || location.pathname.startsWith(to));
+  const isActive = (to: string) =>
+    location.pathname === to || location.pathname.startsWith(to);
   return (
     <SidebarProvider>
       <Sidebar collapsible="offcanvas">
@@ -43,28 +51,41 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive={isActive("/")}> 
-                    <Link to="/"><Home className="h-4 w-4" /> Inicio</Link>
+                  <SidebarMenuButton asChild isActive={isActive("/")}>
+                    <Link to="/">
+                      <Home className="h-4 w-4" /> Inicio
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild isActive={isActive("/tutoriales")}>
-                    <Link to="/tutoriales"><BookOpen className="h-4 w-4" /> Tutoriales</Link>
+                    <Link to="/tutoriales">
+                      <BookOpen className="h-4 w-4" /> Tutoriales
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild isActive={isActive("/articulos")}>
-                    <Link to="/articulos"><Newspaper className="h-4 w-4" /> Artículos</Link>
+                    <Link to="/articulos">
+                      <Newspaper className="h-4 w-4" /> Artículos
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
                   <SidebarMenuButton asChild isActive={isActive("/contacto")}>
-                    <Link to="/contacto"><Mail className="h-4 w-4" /> Contacto</Link>
+                    <Link to="/contacto">
+                      <Mail className="h-4 w-4" /> Contacto
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
                 <SidebarMenuItem>
-                  <SidebarMenuButton asChild isActive={isActive("/comprar-ebook")}>
-                    <Link to="/comprar-ebook"><ShoppingCart className="h-4 w-4" /> Comprar eBook</Link>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={isActive("/comprar-ebook")}
+                  >
+                    <Link to="/comprar-ebook">
+                      <ShoppingCart className="h-4 w-4" /> Comprar eBook
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               </SidebarMenu>

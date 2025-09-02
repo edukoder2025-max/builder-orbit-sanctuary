@@ -2,7 +2,12 @@ import type { RequestHandler } from "express";
 import { z } from "zod";
 import { randomUUID } from "node:crypto";
 import { Pool } from "pg";
-import type { CreateOrderRequest, CreateOrderResponse, GetOrderResponse, OrderRecord } from "@shared/api";
+import type {
+  CreateOrderRequest,
+  CreateOrderResponse,
+  GetOrderResponse,
+  OrderRecord,
+} from "@shared/api";
 
 let pool: Pool | null = null;
 
@@ -14,7 +19,11 @@ async function getPool() {
   if (pool) return pool;
   const url = getDatabaseUrl();
   if (!url) throw new Error("DATABASE_URL/NEON_DATABASE_URL no configurado");
-  pool = new Pool({ connectionString: url, max: 3, ssl: { rejectUnauthorized: false } });
+  pool = new Pool({
+    connectionString: url,
+    max: 3,
+    ssl: { rejectUnauthorized: false },
+  });
   // Ensure schema exists
   await bootstrapSchema(pool);
   return pool;
@@ -64,7 +73,10 @@ export const createOrder: RequestHandler = async (req, res) => {
     const resp: CreateOrderResponse = { ok: true, order: rows[0] };
     res.status(201).json(resp);
   } catch (err: any) {
-    const resp: CreateOrderResponse = { ok: false, error: err?.message || "Error creando orden" };
+    const resp: CreateOrderResponse = {
+      ok: false,
+      error: err?.message || "Error creando orden",
+    };
     res.status(500).json(resp);
   }
 };
@@ -82,13 +94,19 @@ export const getOrder: RequestHandler = async (req, res) => {
       [id],
     );
     if (!rows[0]) {
-      const resp: GetOrderResponse = { ok: false, error: "Orden no encontrada" };
+      const resp: GetOrderResponse = {
+        ok: false,
+        error: "Orden no encontrada",
+      };
       return res.status(404).json(resp);
     }
     const resp: GetOrderResponse = { ok: true, order: rows[0] };
     res.json(resp);
   } catch (err: any) {
-    const resp: GetOrderResponse = { ok: false, error: err?.message || "Error obteniendo orden" };
+    const resp: GetOrderResponse = {
+      ok: false,
+      error: err?.message || "Error obteniendo orden",
+    };
     res.status(500).json(resp);
   }
 };
