@@ -20,6 +20,10 @@ export function createServer() {
 
   app.get("/api/demo", handleDemo);
 
+  // Orders / Payments
+  app.post("/api/orders", createOrder);
+  app.get("/api/orders/:id", getOrder);
+
   // Debug route to list all registered routes
   app.get("/api/debug/routes", (req, res) => {
     const routes: Array<{path: string, methods: string[]}> = [];
