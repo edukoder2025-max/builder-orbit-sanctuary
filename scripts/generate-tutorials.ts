@@ -49,48 +49,98 @@ async function safeFetch(url: string) {
   }
 }
 
+function isGoogleApiKey(v: string) {
+  return /^AIza[0-9A-Za-z_\-]{20,}$/.test(v.trim());
+}
+
+function extractFirstJsonBlock(text: string): string {
+  const fence = /```json\n([\s\S]*?)```/i.exec(text);
+  if (fence && fence[1]) return fence[1].trim();
+  const braceStart =
+    text.indexOf("[") >= 0 ? text.indexOf("[") : text.indexOf("{");
+  const braceEnd = Math.max(text.lastIndexOf("]"), text.lastIndexOf("}"));
+  if (braceStart >= 0 && braceEnd > braceStart)
+    return text.slice(braceStart, braceEnd + 1).trim();
+  return text.trim();
+}
+
+async function fetchFromGemini(key: string, prompt: string, limit: number) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(key)}`;
+  const body = {
+    contents: [
+      {
+        role: "user",
+        parts: [
+          {
+            text: `${prompt}\n\nRequisitos de salida estrictos:\n- Devuelve SOLO JSON válido (no incluyas comentarios ni backticks).\n- Estructura: {\n  \"tutorials\": [\n    { \"title\": string, \"excerpt\": string, \"explain\": string, \"content\": string, \"language\": \"javascript|python|html|css|ts|node\", \"tags\": string[], \"date\": string }\n  ]\n}\n- Genera exactamente ${limit} items.\n- language debe ser uno de: javascript, python, html, css, ts, node.\n- date en formato ISO-8601.`,
+          },
+        ],
+      },
+    ],
+  };
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+      signal: controller.signal,
+    });
+    clearTimeout(timeout);
+    if (!res.ok) throw new Error(`Gemini HTTP ${res.status}`);
+    const data = (await res.json()) as any;
+    const textParts: string[] = [];
+    const candidates = Array.isArray(data?.candidates) ? data.candidates : [];
+    for (const c of candidates) {
+      const parts = c?.content?.parts || [];
+      for (const p of parts)
+        if (typeof p?.text === "string") textParts.push(p.text);
+    }
+    if (textParts.length === 0) throw new Error("Gemini response empty");
+    return textParts.join("\n\n");
+  } catch (e) {
+    clearTimeout(timeout);
+    throw e;
+  }
+}
+
 async function main() {
-  const endpointRaw = (process.env.GM_APY || "").trim();
-  if (!endpointRaw || endpointRaw === "***") {
-    console.log("GM_APY not set or masked (***), skipping tutorial generation.");
+  const raw = (process.env.GM_APY || "").trim();
+  if (!raw || raw === "***") {
+    console.log(
+      "GM_APY not set or masked (***), skipping tutorial generation.",
+    );
     return;
   }
 
-  // Accept inputs without scheme by defaulting to https:// and then validate
-  const hasScheme = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(endpointRaw);
-  const candidate = hasScheme ? endpointRaw : `https://${endpointRaw}`;
+  const limit = Math.min(
+    Math.max(parseInt(String(process.env.GM_LIMIT || "20"), 10) || 20, 1),
+    100,
+  );
+  const defaultPrompt =
+    "Genera una lista de minitutoriales de programación prácticos y breves para principiantes e intermedios. Cada item debe incluir un título claro, un resumen, una explicación paso a paso y un bloque de código copiable (content). Alterna entre los lenguajes: javascript, ts, python, html, css y node. Añade 2-4 tags relevantes por item. Evita repeticiones. Contexto educativo: site edukoder.com.";
+  const userPrompt = (process.env.GM_PROMPT || defaultPrompt).trim();
 
-  let endpoint = "";
-  try {
-    endpoint = new URL(candidate).toString();
-  } catch {
-    console.log(`GM_APY is not a valid URL: ***. Skipping.`);
+  let text = "";
+
+  if (isGoogleApiKey(raw)) {
+    try {
+      const aiText = await fetchFromGemini(raw, userPrompt, limit);
+      text = extractFirstJsonBlock(aiText);
+    } catch (e) {
+      console.log("Gemini request failed. Skipping tutorial generation.");
+      return;
+    }
+  } else {
+    console.log(
+      "GM_APY must be a valid Google API key (starts with AIza). Skipping.",
+    );
     return;
   }
 
   const db = readJson();
   const map = new Map<string, any>(db.tutorials.map((t) => [t.slug, t]));
-
-  // Try POST first (provider may accept prompts/options); fallback to GET
-  let text = "";
-  try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 12000);
-    let res = await fetch(endpoint, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ type: "tutorials", limit: 50 }),
-      signal: controller.signal,
-    });
-    clearTimeout(timeout);
-    if (!res.ok) {
-      res = await safeFetch(endpoint);
-    }
-    text = await res.text();
-  } catch {
-    const res = await safeFetch(endpoint);
-    text = await res.text();
-  }
 
   let items: any[] = [];
   try {
@@ -107,7 +157,9 @@ async function main() {
   for (const it of items) {
     const title = String(it.title || it.heading || "Minitutorial").trim();
     const slug = slugify(String(it.slug || title));
-    const language = normalizeLanguage(String(it.language || it.lang || "javascript"));
+    const language = normalizeLanguage(
+      String(it.language || it.lang || "javascript"),
+    );
     const nowIso = new Date().toISOString();
     const t = {
       slug,
@@ -134,7 +186,7 @@ async function main() {
   console.log(`Upserted ${items.length} tutorials. Total: ${tutorials.length}`);
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exitCode = 0; // don't fail the workflow
+main().catch(() => {
+  console.log("Tutorial generation finished with non-fatal errors. Skipping.");
+  process.exitCode = 0;
 });
