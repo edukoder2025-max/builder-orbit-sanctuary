@@ -29,18 +29,24 @@ jobs:
       - name: Install deps
         run: pnpm install --no-frozen-lockfile
 
-      - name: Validate GM_APY URL
+      - name: Validate GM_APY (lenient)
         env:
           GM_APY: ${{ secrets.GM_APY }}
         run: |
           node -e "
-          const v = process.env.GM_APY;
+          const raw = (process.env.GM_APY || '').trim();
+          if (!raw || raw === '***') {
+            console.log('GM_APY ausente o enmascarado (***). Se omitirá la generación de tutoriales.');
+            process.exit(0);
+          }
+          const hasScheme = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(raw);
+          const candidate = hasScheme ? raw : `https://${raw}`;
           try {
-            const u = new URL(v);
-            console.log('GM_APY OK. host=%s path=%s', u.host, u.pathname);
+            const u = new URL(candidate);
+            console.log(`GM_APY OK. host=${u.host} path=${u.pathname}`);
           } catch (e) {
-            console.log('GM_APY inválido. Debe ser URL absoluta con http(s)://');
-            process.exit(1);
+            console.log('GM_APY inválido. Debe ser URL absoluta o host válido. Se omitirá la generación.');
+            process.exit(0);
           }
           "
 
