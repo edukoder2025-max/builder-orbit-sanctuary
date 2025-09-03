@@ -99,7 +99,7 @@ export function AppSidebar({ children }: { children: React.ReactNode }) {
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <div className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
+        <div className="sticky top-0 z-40 border-b bg-background">
           <div className="container h-14 flex items-center gap-3">
             <SidebarTrigger />
             <div className="font-semibold">Menú</div>
