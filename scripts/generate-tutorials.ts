@@ -50,9 +50,9 @@ async function safeFetch(url: string) {
 }
 
 async function main() {
-  const endpointRaw = (process.env.GM_APY || "").trim();
+  const endpointRaw = (process.env.GM_APY_TUTORIALS || process.env.GM_APY || "").trim();
   if (!endpointRaw || endpointRaw === "***") {
-    console.log("GM_APY not set or masked (***), skipping tutorial generation.");
+    console.log("GM_APY_TUTORIALS/GM_APY not set or masked (***), skipping tutorial generation.");
     return;
   }
 
@@ -64,7 +64,7 @@ async function main() {
   try {
     endpoint = new URL(candidate).toString();
   } catch {
-    console.log(`GM_APY is not a valid URL: ***. Skipping.`);
+    console.log(`GM_APY_TUTORIALS/GM_APY is not a valid URL: ***. Skipping.`);
     return;
   }
 

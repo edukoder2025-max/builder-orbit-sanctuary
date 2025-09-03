@@ -29,30 +29,71 @@ jobs:
       - name: Install deps
         run: pnpm install --no-frozen-lockfile
 
-      - name: Validate GM_APY (lenient)
+      - name: Debug GM_APY URL parse (Node)
         env:
+          GM_APY_TUTORIALS: ${{ secrets.GM_APY_TUTORIALS }}
           GM_APY: ${{ secrets.GM_APY }}
         run: |
           node - <<'NODE'
-          const raw = (process.env.GM_APY || '').trim();
+          const raw = (process.env.GM_APY_TUTORIALS || process.env.GM_APY || '').trim();
           if (!raw || raw === '***') {
-            console.log('GM_APY ausente o enmascarado (***). Se omitirá la generación de tutoriales.');
+            console.log('GM_APY missing or masked (***).');
             process.exit(0);
           }
           const hasScheme = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(raw);
           const candidate = hasScheme ? raw : 'https://' + raw;
           try {
             const u = new URL(candidate);
-            console.log('GM_APY OK. host=%s path=%s', u.host, u.pathname);
+            console.log(`GM_APY OK. host=${u.host} path=${u.pathname}`);
           } catch (e) {
-            console.log('GM_APY inválido. Debe ser URL absoluta o host válido. Se omitirá la generación.');
-            process.exit(0);
+            console.log('GM_APY invalid URL syntax');
           }
           NODE
 
-      - name: Generate tutorials from GM_APY
+      - name: Validate GM_APY (lenient)
+        id: validate
         env:
+          GM_APY_TUTORIALS: ${{ secrets.GM_APY_TUTORIALS }}
           GM_APY: ${{ secrets.GM_APY }}
+        run: |
+          # Prefer tutorial-specific secret, fallback to GM_APY
+          CANDIDATE="$GM_APY_TUTORIALS"
+          if [ -z "$CANDIDATE" ]; then CANDIDATE="$GM_APY"; fi
+
+          # Trim whitespace and detect masked/empty
+          RAW=$(printf '%s' "$CANDIDATE" | tr -d '\r' | tr -d '\n' | tr -d '\t' | sed 's/^ *//;s/ *$//')
+          echo "GM_APY length: ${#RAW}"
+
+          READY=false
+          if [ -z "$RAW" ] || [ "$RAW" = "***" ]; then
+            echo "GM_APY ausente o enmascarado (***). Se omitirá la generación de tutoriales."
+            READY=false
+          else
+            # Ensure scheme
+            case "$RAW" in
+              http://*|https://*) ;;
+              *) RAW="https://$RAW" ;;
+            esac
+            # Probe HEAD without failing the job
+            if curl -s -f -I --max-time 5 "$RAW" > /dev/null; then
+              echo "GM_APY OK."
+              READY=true
+            else
+              echo "GM_APY inválido o no accesible ahora. Se omitirá la generación."
+              READY=false
+            fi
+          fi
+
+          # Export output in the modern way
+          echo "ready=$READY" >> "$GITHUB_OUTPUT"
+
+      - name: Generate tutorials from GM_APY
+        if: steps.validate.outputs.ready == 'true'
+        env:
+          GM_APY_TUTORIALS: ${{ secrets.GM_APY_TUTORIALS }}
+          GM_APY: ${{ secrets.GM_APY }}
+          GM_MODEL: gemini-1.5-flash-8b
+          GM_LIMIT: 10
         run: pnpm generate:tutorials
 
       - name: Generate sitemap
