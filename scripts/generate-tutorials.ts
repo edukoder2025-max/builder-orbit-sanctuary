@@ -64,8 +64,8 @@ function extractFirstJsonBlock(text: string): string {
   return text.trim();
 }
 
-async function fetchFromGemini(key: string, prompt: string, limit: number) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${encodeURIComponent(key)}`;
+async function fetchFromGemini(key: string, prompt: string, limit: number, model: string) {
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
   const body = {
     contents: [
       {
@@ -79,23 +79,25 @@ async function fetchFromGemini(key: string, prompt: string, limit: number) {
     ],
   };
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 15000);
+  const timeout = setTimeout(() => controller.abort(), 20000);
   try {
     const res = await fetch(url, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: { "content-type": "application/json", "x-goog-api-key": key },
       body: JSON.stringify(body),
       signal: controller.signal,
     });
     clearTimeout(timeout);
-    if (!res.ok) throw new Error(`Gemini HTTP ${res.status}`);
+    if (!res.ok) {
+      const errText = await res.text().catch(() => "");
+      throw new Error(`Gemini HTTP ${res.status}${errText ? ": " + errText.slice(0, 200) : ""}`);
+    }
     const data = (await res.json()) as any;
     const textParts: string[] = [];
     const candidates = Array.isArray(data?.candidates) ? data.candidates : [];
     for (const c of candidates) {
       const parts = c?.content?.parts || [];
-      for (const p of parts)
-        if (typeof p?.text === "string") textParts.push(p.text);
+      for (const p of parts) if (typeof p?.text === "string") textParts.push(p.text);
     }
     if (textParts.length === 0) throw new Error("Gemini response empty");
     return textParts.join("\n\n");
