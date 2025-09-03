@@ -7,7 +7,11 @@
       "explain": "1) Llamamos fetch con una URL. 2) Verificamos r.ok para capturar errores HTTP. 3) Convertimos la respuesta a JSON con r.json(). 4) Encadenamos .then para usar los datos y .catch para manejar errores de red o de la conversión.",
       "content": "fetch('https://api.example.com/users')\n  .then(r => { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
       "language": "javascript",
-      "tags": ["api", "fetch", "promesas"],
+      "tags": [
+        "api",
+        "fetch",
+        "promesas"
+      ],
       "date": "2025-01-01T09:00:00.000Z"
     },
     {
@@ -17,7 +21,11 @@
       "explain": "1) Definimos un patrón regex básico para estructura usuario@dominio.tld. 2) es_email usa re.match para evaluar el string. 3) Devuelve True/False según si coincide. 4) Mostramos un ejemplo práctico por consola.",
       "content": "import re\npattern = r'^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$'\ndef es_email(s: str) -> bool:\n    return re.match(pattern, s) is not None\nprint(es_email('hola@ejemplo.com'))\n",
       "language": "python",
-      "tags": ["regex", "validación", "strings"],
+      "tags": [
+        "regex",
+        "validación",
+        "strings"
+      ],
       "date": "2024-12-31T05:00:00.000Z"
     },
     {
@@ -27,7 +35,12 @@
       "explain": "Opción Grid: un contenedor .center usa display:grid y place-items:center. Opción Flex: .wrapper usa display:flex con align-items y justify-content en center. Ambas establecen alto mínimo para centrar verticalmente.",
       "content": ".center { display: grid; place-items: center; min-height: 100vh; }\n/* o */\n.wrapper { display:flex; align-items:center; justify-content:center; min-height:100vh; }",
       "language": "css",
-      "tags": ["css", "layout", "flexbox", "grid"],
+      "tags": [
+        "css",
+        "layout",
+        "flexbox",
+        "grid"
+      ],
       "date": "2024-12-30T01:00:00.000Z"
     },
     {
@@ -37,7 +50,11 @@
       "explain": "1) Definimos un tipo User con id y name. 2) Creamos un objeto que respeta ese contrato. 3) Typamos una función square para asegurar que recibe y devuelve number.",
       "content": "type User = { id:number; name:string }\nconst u: User = { id: 1, name: 'Ana' }\nfunction square(n: number): number { return n*n }",
       "language": "ts",
-      "tags": ["typescript", "tipos", "funciones"],
+      "tags": [
+        "typescript",
+        "tipos",
+        "funciones"
+      ],
       "date": "2024-12-25T10:00:00.000Z"
     },
     {
@@ -47,7 +64,11 @@
       "explain": "1) Importamos express y creamos app. 2) Definimos una ruta GET /api/ping que responde JSON. 3) Levantamos el servidor con listen. 4) Esto ilustra el esqueleto mínimo de una API.",
       "content": "import express from 'express'\nconst app = express()\napp.get('/api/ping', (req,res)=> res.json({ ok:true }))\napp.listen(3000)\n",
       "language": "node",
-      "tags": ["node", "express", "api"],
+      "tags": [
+        "node",
+        "express",
+        "api"
+      ],
       "date": "2024-12-24T03:00:00.000Z"
     },
     {
@@ -57,7 +78,11 @@
       "explain": "1) Tenemos un array base. 2) Usamos map para iterar y transformar cada elemento (n*2). 3) El resultado es un nuevo array sin mutar el original.",
       "content": "const arr = [1,2,3]\nconst dobles = arr.map(n => n*2)\nconsole.log(dobles)",
       "language": "javascript",
-      "tags": ["arrays", "map", "funcional"],
+      "tags": [
+        "arrays",
+        "map",
+        "funcional"
+      ],
       "date": "2024-12-23T12:00:00.000Z"
     }
   ]
