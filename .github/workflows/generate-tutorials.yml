@@ -1,4 +1,4 @@
-name: Generate Tutorials (template)
+name: Generate Tutorials
 
 on:
   workflow_dispatch:
@@ -55,6 +55,11 @@ jobs:
           GM_APY: ${{ secrets.GM_APY }}
         run: pnpm generate:tutorials
 
+      - name: Generate sitemap
+        env:
+          SITE_URL: https://edukoder.com
+        run: pnpm sitemap
+
       - name: Commit and push updates
         env:
           GIT_AUTHOR_NAME: github-actions[bot]
@@ -64,8 +69,10 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if [ -n "$(git status --porcelain)" ]; then
-            git add public/data/tutorials.json
-            git commit -m "chore(tutorials): auto-generate tutorials and update catalog"
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore(tutorials): auto-generate tutorials and sitemap [skip ci]"
             git push
           else
             echo "No changes"
