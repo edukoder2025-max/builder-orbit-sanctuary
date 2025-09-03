@@ -1,0 +1,30 @@
+Cambios realizados en la sección de Tutoriales (fecha: 2025-01-02)
+
+1) Nuevos tips (32 entradas nuevas)
+- Se añadieron más de 30 minitutoriales con título, excerpt, explicación paso a paso (explain) y código de ejemplo. Cobertura: JavaScript, TypeScript, Node.js, CSS/HTML y Python.
+- Ejemplos destacados: debounce, throttle, optional chaining, nullish coalescing, reduce, fetch con async/await, Intl, utility types (Partial, Pick, Record), narrowing, validación con Zod, dotenv, middleware de logger, path.join, fetch nativo Node 18+, clamp, container queries, grid auto-fit, sticky header, centrar absoluto, semántica HTML, botón accesible, list comprehension, f-strings, with, merge de dicts, requests, localStorage JSON, URLSearchParams y CustomEvent.
+
+2) Mejoras de UX en la página /tutoriales
+- Búsqueda por título, contenido y tags.
+- Filtro por tags múltiples (AND).
+- Orden por recientes, antiguos o alfabético.
+- Filtro “Solo favoritos”.
+- Botón para copiar el código dentro del modal.
+
+3) Favoritos
+- Sistema de favoritos persistente (localStorage). Icono Bookmark en cada tarjeta (relleno al estar en favoritos). Disponible en listado general y por lenguaje.
+
+4) Ajustes visuales
+- Se aclaró el color de fondo claro del sidebar (de 98% a 100% de luminosidad) para evitar apariencia gris en tema claro.
+- Encabezado superior con fondo semitransparente mantiene contraste y legibilidad.
+
+Rutas y archivos modificados
+- client/pages/Tutorials.tsx (búsqueda, filtros, orden, copiar, solo favs)
+- client/pages/TutorialLanguage.tsx (favoritos)
+- client/components/TutorialCard.tsx (toggle favoritos + copiar código + explain)
+- client/hooks/useFavorites.ts (nuevo hook)
+- public/data/tutorials.json (nuevos minitutoriales con explain y code)
+- client/global.css (ajuste --sidebar-background)
+
+Notas
+- El sistema es extensible: para añadir más tips, editar public/data/tutorials.json o usar el script scripts/generate-tutorials.ts con su origen configurado.
