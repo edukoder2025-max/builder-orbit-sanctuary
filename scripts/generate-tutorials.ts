@@ -123,16 +123,23 @@ async function main() {
   const defaultPrompt =
     "Genera una lista de minitutoriales de programación prácticos y breves para principiantes e intermedios. Cada item debe incluir un título claro, un resumen, una explicación paso a paso y un bloque de código copiable (content). Alterna entre los lenguajes: javascript, ts, python, html, css y node. Añade 2-4 tags relevantes por item. Evita repeticiones. Contexto educativo: site edukoder.com.";
   const userPrompt = (process.env.GM_PROMPT || defaultPrompt).trim();
+  const primaryModel = (process.env.GM_MODEL || "gemini-1.5-flash").trim();
+  const fallbackModel = primaryModel === "gemini-1.5-flash" ? "gemini-1.5-flash-8b" : "gemini-1.5-flash";
 
   let text = "";
 
   if (isGoogleApiKey(raw)) {
     try {
-      const aiText = await fetchFromGemini(raw, userPrompt, limit);
+      const aiText = await fetchFromGemini(raw, userPrompt, limit, primaryModel);
       text = extractFirstJsonBlock(aiText);
     } catch (e) {
-      console.log("Gemini request failed. Skipping tutorial generation.");
-      return;
+      try {
+        const aiText = await fetchFromGemini(raw, userPrompt, limit, fallbackModel);
+        text = extractFirstJsonBlock(aiText);
+      } catch {
+        console.log("Gemini request failed. Skipping tutorial generation.");
+        return;
+      }
     }
   } else {
     console.log(
