@@ -64,7 +64,12 @@ function extractFirstJsonBlock(text: string): string {
   return text.trim();
 }
 
-async function fetchFromGemini(key: string, prompt: string, limit: number, model: string) {
+async function fetchFromGemini(
+  key: string,
+  prompt: string,
+  limit: number,
+  model: string,
+) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent`;
   const body = {
     contents: [
@@ -90,14 +95,17 @@ async function fetchFromGemini(key: string, prompt: string, limit: number, model
     clearTimeout(timeout);
     if (!res.ok) {
       const errText = await res.text().catch(() => "");
-      throw new Error(`Gemini HTTP ${res.status}${errText ? ": " + errText.slice(0, 200) : ""}`);
+      throw new Error(
+        `Gemini HTTP ${res.status}${errText ? ": " + errText.slice(0, 200) : ""}`,
+      );
     }
     const data = (await res.json()) as any;
     const textParts: string[] = [];
     const candidates = Array.isArray(data?.candidates) ? data.candidates : [];
     for (const c of candidates) {
       const parts = c?.content?.parts || [];
-      for (const p of parts) if (typeof p?.text === "string") textParts.push(p.text);
+      for (const p of parts)
+        if (typeof p?.text === "string") textParts.push(p.text);
     }
     if (textParts.length === 0) throw new Error("Gemini response empty");
     return textParts.join("\n\n");
@@ -124,20 +132,35 @@ async function main() {
     "Genera una lista de minitutoriales de programación prácticos y breves para principiantes e intermedios. Cada item debe incluir un título claro, un resumen, una explicación paso a paso y un bloque de código copiable (content). Alterna entre los lenguajes: javascript, ts, python, html, css y node. Añade 2-4 tags relevantes por item. Evita repeticiones. Contexto educativo: site edukoder.com.";
   const userPrompt = (process.env.GM_PROMPT || defaultPrompt).trim();
   const primaryModel = (process.env.GM_MODEL || "gemini-1.5-flash").trim();
-  const fallbackModel = primaryModel === "gemini-1.5-flash" ? "gemini-1.5-flash-8b" : "gemini-1.5-flash";
+  const fallbackModel =
+    primaryModel === "gemini-1.5-flash"
+      ? "gemini-1.5-flash-8b"
+      : "gemini-1.5-flash";
 
   let text = "";
 
   if (isGoogleApiKey(raw)) {
     try {
-      const aiText = await fetchFromGemini(raw, userPrompt, limit, primaryModel);
+      const aiText = await fetchFromGemini(
+        raw,
+        userPrompt,
+        limit,
+        primaryModel,
+      );
       text = extractFirstJsonBlock(aiText);
     } catch (e) {
       try {
-        const aiText = await fetchFromGemini(raw, userPrompt, limit, fallbackModel);
+        const aiText = await fetchFromGemini(
+          raw,
+          userPrompt,
+          limit,
+          fallbackModel,
+        );
         text = extractFirstJsonBlock(aiText);
       } catch (err) {
-        console.log(`Gemini request failed: ${err instanceof Error ? err.message : String(err)}. Skipping tutorial generation.`);
+        console.log(
+          `Gemini request failed: ${err instanceof Error ? err.message : String(err)}. Skipping tutorial generation.`,
+        );
         return;
       }
     }
