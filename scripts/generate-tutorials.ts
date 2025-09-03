@@ -125,48 +125,8 @@ async function main() {
       return;
     }
   } else {
-    const hasScheme = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(raw);
-    const candidate = hasScheme ? raw : `https://${raw}`;
-    let endpoint = "";
-    try {
-      const u = new URL(candidate);
-      const host = u.hostname || "";
-      const isLocalhost = host === "localhost";
-      const isIp = /^\d{1,3}(?:\.\d{1,3}){3}$/.test(host);
-      const hasDot = host.includes(".");
-      if (!(isLocalhost || isIp || hasDot)) {
-        console.log("GM_APY hostname looks invalid. Skipping tutorial generation.");
-        return;
-      }
-      endpoint = u.toString();
-    } catch {
-      console.log("GM_APY is not a valid URL. Skipping.");
-      return;
-    }
-
-    try {
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 12000);
-      let res = await fetch(endpoint, {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ type: "tutorials", limit }),
-        signal: controller.signal,
-      });
-      clearTimeout(timeout);
-      if (!res.ok) {
-        res = await safeFetch(endpoint);
-      }
-      text = await res.text();
-    } catch {
-      try {
-        const res = await safeFetch(endpoint);
-        text = await res.text();
-      } catch {
-        console.log("Could not reach GM_APY endpoint. Skipping tutorial generation.");
-        return;
-      }
-    }
+    console.log("GM_APY must be a valid Google API key (starts with AIza). Skipping.");
+    return;
   }
 
   const db = readJson();
