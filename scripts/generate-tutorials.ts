@@ -56,9 +56,11 @@ function isGoogleApiKey(v: string) {
 function extractFirstJsonBlock(text: string): string {
   const fence = /```json\n([\s\S]*?)```/i.exec(text);
   if (fence && fence[1]) return fence[1].trim();
-  const braceStart = text.indexOf("[") >= 0 ? text.indexOf("[") : text.indexOf("{");
+  const braceStart =
+    text.indexOf("[") >= 0 ? text.indexOf("[") : text.indexOf("{");
   const braceEnd = Math.max(text.lastIndexOf("]"), text.lastIndexOf("}"));
-  if (braceStart >= 0 && braceEnd > braceStart) return text.slice(braceStart, braceEnd + 1).trim();
+  if (braceStart >= 0 && braceEnd > braceStart)
+    return text.slice(braceStart, braceEnd + 1).trim();
   return text.trim();
 }
 
@@ -92,7 +94,8 @@ async function fetchFromGemini(key: string, prompt: string, limit: number) {
     const candidates = Array.isArray(data?.candidates) ? data.candidates : [];
     for (const c of candidates) {
       const parts = c?.content?.parts || [];
-      for (const p of parts) if (typeof p?.text === "string") textParts.push(p.text);
+      for (const p of parts)
+        if (typeof p?.text === "string") textParts.push(p.text);
     }
     if (textParts.length === 0) throw new Error("Gemini response empty");
     return textParts.join("\n\n");
@@ -105,11 +108,16 @@ async function fetchFromGemini(key: string, prompt: string, limit: number) {
 async function main() {
   const raw = (process.env.GM_APY || "").trim();
   if (!raw || raw === "***") {
-    console.log("GM_APY not set or masked (***), skipping tutorial generation.");
+    console.log(
+      "GM_APY not set or masked (***), skipping tutorial generation.",
+    );
     return;
   }
 
-  const limit = Math.min(Math.max(parseInt(String(process.env.GM_LIMIT || "20"), 10) || 20, 1), 100);
+  const limit = Math.min(
+    Math.max(parseInt(String(process.env.GM_LIMIT || "20"), 10) || 20, 1),
+    100,
+  );
   const defaultPrompt =
     "Genera una lista de minitutoriales de programación prácticos y breves para principiantes e intermedios. Cada item debe incluir un título claro, un resumen, una explicación paso a paso y un bloque de código copiable (content). Alterna entre los lenguajes: javascript, ts, python, html, css y node. Añade 2-4 tags relevantes por item. Evita repeticiones. Contexto educativo: site edukoder.com.";
   const userPrompt = (process.env.GM_PROMPT || defaultPrompt).trim();
@@ -125,7 +133,9 @@ async function main() {
       return;
     }
   } else {
-    console.log("GM_APY must be a valid Google API key (starts with AIza). Skipping.");
+    console.log(
+      "GM_APY must be a valid Google API key (starts with AIza). Skipping.",
+    );
     return;
   }
 
@@ -135,7 +145,9 @@ async function main() {
   let items: any[] = [];
   try {
     const parsed = JSON.parse(text);
-    items = Array.isArray(parsed) ? parsed : parsed.tutorials || parsed.items || parsed.data || [];
+    items = Array.isArray(parsed)
+      ? parsed
+      : parsed.tutorials || parsed.items || parsed.data || [];
   } catch {
     items = text
       .split(/\n-{3,}\n/g)
@@ -145,7 +157,9 @@ async function main() {
   for (const it of items) {
     const title = String(it.title || it.heading || "Minitutorial").trim();
     const slug = slugify(String(it.slug || title));
-    const language = normalizeLanguage(String(it.language || it.lang || "javascript"));
+    const language = normalizeLanguage(
+      String(it.language || it.lang || "javascript"),
+    );
     const nowIso = new Date().toISOString();
     const t = {
       slug,
@@ -165,7 +179,9 @@ async function main() {
     map.set(slug, t);
   }
 
-  const tutorials = Array.from(map.values()).sort((a, b) => (a.date < b.date ? 1 : -1));
+  const tutorials = Array.from(map.values()).sort((a, b) =>
+    a.date < b.date ? 1 : -1,
+  );
   writeJson({ tutorials });
   console.log(`Upserted ${items.length} tutorials. Total: ${tutorials.length}`);
 }
