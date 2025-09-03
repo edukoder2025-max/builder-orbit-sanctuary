@@ -69,18 +69,30 @@ jobs:
             echo "GM_APY ausente o enmascarado (***). Se omitirá la generación de tutoriales."
             READY=false
           else
-            # Ensure scheme
+            # Heuristic: decide if RAW is a URL or an API key
+            IS_URL=false
             case "$RAW" in
-              http://*|https://*) ;;
-              *) RAW="https://$RAW" ;;
+              http://*|https://*) IS_URL=true ;;
+              *.*|*/*) IS_URL=true ;; # contains dot or slash, likely URL/host
             esac
-            # Probe HEAD without failing the job
-            if curl -s -f -I --max-time 5 "$RAW" > /dev/null; then
-              echo "GM_APY OK."
-              READY=true
+
+            if [ "$IS_URL" = true ]; then
+              # Ensure scheme
+              case "$RAW" in
+                http://*|https://*) ;;
+                *) RAW="https://$RAW" ;;
+              esac
+              # Probe HEAD without failing the job
+              if curl -s -f -I --max-time 5 "$RAW" > /dev/null; then
+                echo "GM_APY OK (URL)."
+                READY=true
+              else
+                echo "GM_APY inválido o no accesible ahora (URL). Se omitirá la generación."
+                READY=false
+              fi
             else
-              echo "GM_APY inválido o no accesible ahora. Se omitirá la generación."
-              READY=false
+              echo "GM_APY parece ser una API key (no URL). Se omitirá el probe y se continúa."
+              READY=true
             fi
           fi
 
