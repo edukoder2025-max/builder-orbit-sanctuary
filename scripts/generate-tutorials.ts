@@ -136,8 +136,8 @@ async function main() {
       try {
         const aiText = await fetchFromGemini(raw, userPrompt, limit, fallbackModel);
         text = extractFirstJsonBlock(aiText);
-      } catch {
-        console.log("Gemini request failed. Skipping tutorial generation.");
+      } catch (err) {
+        console.log(`Gemini request failed: ${err instanceof Error ? err.message : String(err)}. Skipping tutorial generation.`);
         return;
       }
     }
