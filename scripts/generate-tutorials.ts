@@ -62,7 +62,17 @@ async function main() {
 
   let endpoint = "";
   try {
-    endpoint = new URL(candidate).toString();
+    const u = new URL(candidate);
+    // Basic hostname validation: allow localhost, IPs, or domains with a dot
+    const host = u.hostname || "";
+    const isLocalhost = host === "localhost";
+    const isIp = /^\d{1,3}(?:\.\d{1,3}){3}$/.test(host);
+    const hasDot = host.includes(".");
+    if (!(isLocalhost || isIp || hasDot)) {
+      console.log("GM_APY hostname looks invalid. Skipping tutorial generation.");
+      return;
+    }
+    endpoint = u.toString();
   } catch {
     console.log(`GM_APY is not a valid URL: ***. Skipping.`);
     return;
@@ -87,9 +97,14 @@ async function main() {
       res = await safeFetch(endpoint);
     }
     text = await res.text();
-  } catch {
-    const res = await safeFetch(endpoint);
-    text = await res.text();
+  } catch (e) {
+    try {
+      const res = await safeFetch(endpoint);
+      text = await res.text();
+    } catch (inner) {
+      console.log("Could not reach GM_APY endpoint. Skipping tutorial generation.");
+      return;
+    }
   }
 
   let items: any[] = [];
@@ -134,7 +149,8 @@ async function main() {
   console.log(`Upserted ${items.length} tutorials. Total: ${tutorials.length}`);
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exitCode = 0; // don't fail the workflow
+main().catch(() => {
+  // Ensure CI does not fail due to this optional step
+  console.log("Tutorial generation finished with non-fatal errors. Skipping.");
+  process.exitCode = 0;
 });
