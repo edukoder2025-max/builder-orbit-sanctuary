@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import LanguagesNav from "@/components/site/LanguagesNav";
 import { useTutorials, Tutorial } from "@/hooks/useTutorials";
 import { TutorialCard } from "@/components/TutorialCard";
+import { useFavorites } from "@/hooks/useFavorites";
 
 function matchLanguage(slug: string, t: Tutorial) {
   if (slug === "javascript") return t.language === "javascript";
@@ -16,6 +17,8 @@ function matchLanguage(slug: string, t: Tutorial) {
 export default function TutorialLanguage() {
   const params = useParams();
   const { tutorials } = useTutorials();
+  const { isFavorite, toggle } = useFavorites();
+
   const list = useMemo(
     () => tutorials.filter((t) => matchLanguage(params.lang || "", t)),
     [tutorials, params.lang],
@@ -33,7 +36,7 @@ export default function TutorialLanguage() {
         </p>
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((t) => (
-            <TutorialCard key={t.slug} t={t} />
+            <TutorialCard key={t.slug} t={t} favorite={isFavorite(t.slug)} onToggleFavorite={toggle} />
           ))}
           {list.length === 0 && (
             <div className="col-span-full text-sm text-muted-foreground">
