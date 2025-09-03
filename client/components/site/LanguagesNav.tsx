@@ -12,7 +12,7 @@ export const languages = [
 export default function LanguagesNav() {
   const { pathname } = useLocation();
   return (
-    <div className="border-b bg-background/80">
+    <div className="border-b bg-background">
       <div className="container h-12 flex items-center gap-1 overflow-x-auto">
         {languages.map((l) => (
           <Link
