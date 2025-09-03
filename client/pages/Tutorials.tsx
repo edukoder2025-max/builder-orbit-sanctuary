@@ -3,7 +3,13 @@ import LanguagesNav from "@/components/site/LanguagesNav";
 import { TutorialCard } from "@/components/TutorialCard";
 import { useTutorials, Tutorial } from "@/hooks/useTutorials";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
@@ -56,11 +62,14 @@ export default function Tutorials() {
 
   const list = useMemo(() => {
     let arr = tutorials.slice();
-    arr = arr.filter((t) => matchesQuery(t, query) && hasAllTags(t, selectedTags));
+    arr = arr.filter(
+      (t) => matchesQuery(t, query) && hasAllTags(t, selectedTags),
+    );
     if (onlyFavs) arr = arr.filter((t) => isFavorite(t.slug));
     if (sort === "latest") arr.sort((a, b) => (a.date < b.date ? 1 : -1));
     if (sort === "oldest") arr.sort((a, b) => (a.date > b.date ? 1 : -1));
-    if (sort === "title") arr.sort((a, b) => a.title.localeCompare(b.title, "es"));
+    if (sort === "title")
+      arr.sort((a, b) => a.title.localeCompare(b.title, "es"));
     return arr;
   }, [tutorials, query, selectedTags, sort, onlyFavs, isFavorite]);
 
@@ -68,8 +77,12 @@ export default function Tutorials() {
     <div>
       <LanguagesNav />
       <div className="container py-10">
-        <h1 className="text-3xl font-bold tracking-tight">Todos los tutoriales</h1>
-        <p className="text-muted-foreground mt-1">Explora, filtra y guarda tus favoritos.</p>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Todos los tutoriales
+        </h1>
+        <p className="text-muted-foreground mt-1">
+          Explora, filtra y guarda tus favoritos.
+        </p>
 
         <div className="mt-6 grid gap-3 sm:grid-cols-3">
           <div className="sm:col-span-2">
@@ -103,33 +116,58 @@ export default function Tutorials() {
                 type="button"
                 onClick={() =>
                   setSelectedTags((prev) =>
-                    prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+                    prev.includes(tag)
+                      ? prev.filter((t) => t !== tag)
+                      : [...prev, tag],
                   )
                 }
               >
-                <Badge className={cn(active && "bg-primary text-primary-foreground border-primary")} variant={active ? "default" : "outline"}>
+                <Badge
+                  className={cn(
+                    active &&
+                      "bg-primary text-primary-foreground border-primary",
+                  )}
+                  variant={active ? "default" : "outline"}
+                >
                   {tag}
                 </Badge>
               </button>
             );
           })}
           {allTags.length === 0 && (
-            <div className="text-sm text-muted-foreground">No hay tags disponibles.</div>
+            <div className="text-sm text-muted-foreground">
+              No hay tags disponibles.
+            </div>
           )}
         </div>
 
         <div className="mt-4 flex items-center gap-2">
-          <Switch id="only-favs" checked={onlyFavs} onCheckedChange={setOnlyFavs} />
-          <label htmlFor="only-favs" className="text-sm">Solo favoritos</label>
-          <div className="ml-auto text-sm text-muted-foreground">{list.length} resultados</div>
+          <Switch
+            id="only-favs"
+            checked={onlyFavs}
+            onCheckedChange={setOnlyFavs}
+          />
+          <label htmlFor="only-favs" className="text-sm">
+            Solo favoritos
+          </label>
+          <div className="ml-auto text-sm text-muted-foreground">
+            {list.length} resultados
+          </div>
         </div>
 
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {list.map((t) => (
-            <TutorialCard key={t.slug} t={t} favorite={isFavorite(t.slug)} onToggleFavorite={toggle} />
+            <TutorialCard
+              key={t.slug}
+              t={t}
+              favorite={isFavorite(t.slug)}
+              onToggleFavorite={toggle}
+            />
           ))}
           {list.length === 0 && (
-            <div className="col-span-full text-sm text-muted-foreground">No se encontraron resultados.</div>
+            <div className="col-span-full text-sm text-muted-foreground">
+              No se encontraron resultados.
+            </div>
           )}
         </div>
       </div>
