@@ -1,13 +1,460 @@
 {
   "tutorials": [
     {
+      "slug": "js-custom-event",
+      "title": "CustomEvent para comunicación",
+      "excerpt": "Emite eventos personalizados entre componentes sueltos.",
+      "explain": "1) Crea CustomEvent con detail. 2) dispatchEvent en window o nodo. 3) addEventListener para escuchar.",
+      "content": "const ev = new CustomEvent('notificar', { detail:{ msg:'hola' } });\nwindow.dispatchEvent(ev);\nwindow.addEventListener('notificar', (e)=>console.log(e.detail));",
+      "language": "javascript",
+      "tags": [
+        "eventos",
+        "CustomEvent",
+        "arquitectura"
+      ],
+      "date": "2025-01-02T00:32:00.000Z"
+    },
+    {
+      "slug": "js-urlsearchparams",
+      "title": "URLSearchParams",
+      "excerpt": "Construye query strings de forma segura.",
+      "explain": "1) Añade pares clave-valor. 2) Usa toString() para la URL.",
+      "content": "const qs = new URLSearchParams({ q:'react', page:'1' });\nconst url = '/buscar?'+qs.toString();",
+      "language": "javascript",
+      "tags": [
+        "url",
+        "querystring"
+      ],
+      "date": "2025-01-02T00:31:00.000Z"
+    },
+    {
+      "slug": "js-localstorage-json",
+      "title": "Guardar JSON en localStorage",
+      "excerpt": "Serializa con JSON.stringify y parsea con JSON.parse.",
+      "explain": "1) stringify para guardar. 2) parse al leer. 3) Maneja errores con try/catch.",
+      "content": "localStorage.setItem('cfg', JSON.stringify({ tema:'claro' }));\nconst cfg = JSON.parse(localStorage.getItem('cfg')||'{}');",
+      "language": "javascript",
+      "tags": [
+        "storage",
+        "json",
+        "web"
+      ],
+      "date": "2025-01-02T00:30:00.000Z"
+    },
+    {
+      "slug": "py-requests-get",
+      "title": "GET con requests",
+      "excerpt": "Realiza peticiones HTTP de forma sencilla.",
+      "explain": "1) requests.get(URL). 2) Comprueba status_code. 3) Usa .json() si devuelve JSON.",
+      "content": "import requests\nr = requests.get('https://api.github.com')\nprint(r.status_code)\nprint(r.json().get('current_user_url'))",
+      "language": "python",
+      "tags": [
+        "http",
+        "requests",
+        "api"
+      ],
+      "date": "2025-01-02T00:29:00.000Z"
+    },
+    {
+      "slug": "py-dict-merge",
+      "title": "Unir diccionarios",
+      "excerpt": "Fusiona dicts con | en Python 3.9+.",
+      "explain": "1) Usa a | b para unir. 2) Para actualización in-place, a |= b.",
+      "content": "a = {'x':1}\nb = {'y':2}\nc = a | b",
+      "language": "python",
+      "tags": [
+        "python",
+        "dict",
+        "merge"
+      ],
+      "date": "2025-01-02T00:28:00.000Z"
+    },
+    {
+      "slug": "py-with",
+      "title": "with como context manager",
+      "excerpt": "Asegura cierre de recursos automáticamente.",
+      "explain": "1) with abre el contexto. 2) Al salir cierra el recurso. 3) Evita leaks.",
+      "content": "with open('datos.txt') as f:\n    contenido = f.read()",
+      "language": "python",
+      "tags": [
+        "python",
+        "archivos",
+        "context"
+      ],
+      "date": "2025-01-02T00:27:00.000Z"
+    },
+    {
+      "slug": "py-fstring",
+      "title": "f-strings",
+      "excerpt": "Interpolación de cadenas moderna en Python.",
+      "explain": "1) Prefija con f. 2) Usa {expr} dentro del string. 3) Permite formateo como :.2f.",
+      "content": "nombre = 'Ana'\nprint(f'Hola, {nombre}!')",
+      "language": "python",
+      "tags": [
+        "python",
+        "strings",
+        "format"
+      ],
+      "date": "2025-01-02T00:26:00.000Z"
+    },
+    {
+      "slug": "py-list-comprehension",
+      "title": "List comprehension",
+      "excerpt": "Crea listas a partir de iterables en una línea.",
+      "explain": "1) [expr for x in iterable]. 2) Condición opcional al final. 3) Código conciso y legible.",
+      "content": "cuadrados = [n*n for n in range(5)]\nprint(cuadrados)",
+      "language": "python",
+      "tags": [
+        "python",
+        "listas",
+        "comprensión"
+      ],
+      "date": "2025-01-02T00:25:00.000Z"
+    },
+    {
+      "slug": "html-boton-accesible",
+      "title": "Botón accesible real",
+      "excerpt": "No uses divs clicables; usa <button> con atributos correctos.",
+      "explain": "1) Emplea <button> para acciones. 2) Asegura label descriptivo. 3) Gestiona disabled y type.",
+      "content": "<button type=\"button\" aria-label=\"Abrir menú\">☰</button>",
+      "language": "html",
+      "tags": [
+        "html",
+        "accesibilidad",
+        "button"
+      ],
+      "date": "2025-01-02T00:24:00.000Z"
+    },
+    {
+      "slug": "html-semantica-sectioning",
+      "title": "Etiquetas semánticas de seccionado",
+      "excerpt": "Mejora SEO y accesibilidad con section, article, header, footer.",
+      "explain": "1) Usa section/article para bloques temáticos. 2) header/footer para cabeceras y pies. 3) Asiste a lectores de pantalla.",
+      "content": "<article>\n  <header><h2>Título</h2></header>\n  <p>Contenido...</p>\n  <footer>Autor</footer>\n</article>",
+      "language": "html",
+      "tags": [
+        "html",
+        "semántica",
+        "seo"
+      ],
+      "date": "2025-01-02T00:23:00.000Z"
+    },
+    {
+      "slug": "css-center-absolute",
+      "title": "Centrar absoluto con transform",
+      "excerpt": "Técnica clásica para centrar elementos absolutamente posicionados.",
+      "explain": "1) left/top 50%. 2) translate(-50%,-50%) para corregir.",
+      "content": ".box { position:absolute; left:50%; top:50%; transform: translate(-50%,-50%); }",
+      "language": "css",
+      "tags": [
+        "css",
+        "centrado",
+        "position"
+      ],
+      "date": "2025-01-02T00:22:00.000Z"
+    },
+    {
+      "slug": "css-sticky-header",
+      "title": "Header sticky",
+      "excerpt": "Mantén un encabezado visible al hacer scroll.",
+      "explain": "1) position:sticky y top:0. 2) fondo opaco y border-bottom para contraste.",
+      "content": "header { position: sticky; top: 0; background: white; border-bottom:1px solid #eee; }",
+      "language": "css",
+      "tags": [
+        "css",
+        "sticky",
+        "layout"
+      ],
+      "date": "2025-01-02T00:21:00.000Z"
+    },
+    {
+      "slug": "css-grid-auto-fit",
+      "title": "Grid responsive con auto-fit",
+      "excerpt": "Rejilla automática con minmax y auto-fit.",
+      "explain": "1) Usa repeat(auto-fit, minmax()). 2) Las columnas se adaptan al ancho.",
+      "content": ".grid {\n  display:grid;\n  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));\n  gap:1rem;\n}",
+      "language": "css",
+      "tags": [
+        "css",
+        "grid",
+        "responsive"
+      ],
+      "date": "2025-01-02T00:20:00.000Z"
+    },
+    {
+      "slug": "css-container-queries",
+      "title": "Container queries básicas",
+      "excerpt": "Estilos según el tamaño del contenedor, no de la ventana.",
+      "explain": "1) Declara container-type en el padre. 2) Usa @container (min-width:...). 3) Componente más autónomo.",
+      "content": ".card { container-type: inline-size; }\n@container (min-width: 500px) { .card { display:grid; grid-template-columns:1fr 1fr; } }",
+      "language": "css",
+      "tags": [
+        "css",
+        "container queries",
+        "responsive"
+      ],
+      "date": "2025-01-02T00:19:00.000Z"
+    },
+    {
+      "slug": "css-clamp",
+      "title": "Tipografía fluida con clamp",
+      "excerpt": "Escala la fuente entre un mínimo y máximo.",
+      "explain": "1) clamp(min, preferido, max). 2) Usa unidades vw para el preferido. 3) Garantiza legibilidad.",
+      "content": "h1 { font-size: clamp(1.5rem, 3vw, 2.5rem); }",
+      "language": "css",
+      "tags": [
+        "css",
+        "tipografía",
+        "clamp"
+      ],
+      "date": "2025-01-02T00:18:00.000Z"
+    },
+    {
+      "slug": "node-fetch-nativo",
+      "title": "fetch nativo en Node 18+",
+      "excerpt": "Usa fetch sin dependencias externas.",
+      "explain": "1) Disponible desde Node 18. 2) Igual API que en el navegador. 3) Maneja errores HTTP manualmente.",
+      "content": "const r = await fetch('https://api.github.com');\nif(!r.ok) throw new Error('HTTP '+r.status);\nconst data = await r.json();",
+      "language": "node",
+      "tags": [
+        "node",
+        "fetch"
+      ],
+      "date": "2025-01-02T00:17:00.000Z"
+    },
+    {
+      "slug": "node-path-join",
+      "title": "path.join para rutas seguras",
+      "excerpt": "Une segmentos de ruta sin errores de separadores.",
+      "explain": "1) Usa path.join en vez de concatenar strings. 2) Asegura compatibilidad cross-OS.",
+      "content": "import path from 'node:path';\nconst p = path.join(process.cwd(),'public','data');",
+      "language": "node",
+      "tags": [
+        "node",
+        "path",
+        "fs"
+      ],
+      "date": "2025-01-02T00:16:00.000Z"
+    },
+    {
+      "slug": "node-logger-middleware",
+      "title": "Middleware de logger en Express",
+      "excerpt": "Registra método y ruta de cada request.",
+      "explain": "1) Define una función (req,res,next). 2) Loguea datos útiles. 3) Llama next() para continuar.",
+      "content": "import express from 'express';\nconst app = express();\napp.use((req,_res,next)=>{\n  console.log(req.method, req.path);\n  next();\n});",
+      "language": "node",
+      "tags": [
+        "express",
+        "middleware",
+        "logging"
+      ],
+      "date": "2025-01-02T00:15:00.000Z"
+    },
+    {
+      "slug": "node-dotenv",
+      "title": "Cargar variables con dotenv",
+      "excerpt": "Gestiona secretos desde .env en desarrollo.",
+      "explain": "1) Instala dotenv. 2) Llama a config temprano. 3) Lee process.env.MI_VAR.",
+      "content": "import 'dotenv/config';\nconsole.log(process.env.NODE_ENV);",
+      "language": "node",
+      "tags": [
+        "dotenv",
+        "env",
+        "config"
+      ],
+      "date": "2025-01-02T00:14:00.000Z"
+    },
+    {
+      "slug": "ts-zod-parse",
+      "title": "Validar con Zod",
+      "excerpt": "Valida datos y obtén tipos inferidos.",
+      "explain": "1) Define un esquema. 2) parse valida y retorna el tipo. 3) safeParse no lanza errores.",
+      "content": "import { z } from 'zod';\nconst User = z.object({ id:z.number(), name:z.string() });\nconst u = User.parse({ id:1, name:'Ana' });",
+      "language": "ts",
+      "tags": [
+        "zod",
+        "validación",
+        "tipado"
+      ],
+      "date": "2025-01-02T00:13:00.000Z"
+    },
+    {
+      "slug": "ts-narrowing",
+      "title": "Type narrowing",
+      "excerpt": "Usa typeof/in para acotar tipos en runtime.",
+      "explain": "1) Comprueba typeof o 'in'. 2) TypeScript reduce el tipo posible dentro del bloque.",
+      "content": "function len(x:string|string[]){\n  return typeof x==='string' ? x.length : x.length;\n}",
+      "language": "ts",
+      "tags": [
+        "typescript",
+        "narrowing"
+      ],
+      "date": "2025-01-02T00:12:00.000Z"
+    },
+    {
+      "slug": "ts-record",
+      "title": "Record como diccionario",
+      "excerpt": "Crea mapas tipados con claves y valores específicos.",
+      "explain": "1) Record<K,V> define un objeto con claves K y valores V. 2) Evita any en mapas.",
+      "content": "type Roles = 'admin'|'user';\nconst perms: Record<Roles, string[]> = { admin:['*'], user:['read'] };",
+      "language": "ts",
+      "tags": [
+        "typescript",
+        "Record",
+        "mapas"
+      ],
+      "date": "2025-01-02T00:11:00.000Z"
+    },
+    {
+      "slug": "ts-pick",
+      "title": "Utility type Pick",
+      "excerpt": "Elige un subconjunto de propiedades de un tipo.",
+      "explain": "1) Pick<T, K> crea un tipo con solo keys K. 2) Reduce la superficie expuesta en APIs.",
+      "content": "type User = { id:number; name:string; email:string };\ntype PublicUser = Pick<User,'id'|'name'>;",
+      "language": "ts",
+      "tags": [
+        "typescript",
+        "Pick"
+      ],
+      "date": "2025-01-02T00:10:00.000Z"
+    },
+    {
+      "slug": "ts-partial",
+      "title": "Utility type Partial",
+      "excerpt": "Vuelve opcionales todas las propiedades de un tipo.",
+      "explain": "1) Partial<T> mapea las keys de T como opcionales. 2) Útil para updates parciales en funciones.",
+      "content": "type User = { id:number; name:string; email:string };\nfunction updateUser(id:number, patch: Partial<User>) {/* ... */}",
+      "language": "ts",
+      "tags": [
+        "typescript",
+        "utility types",
+        "Partial"
+      ],
+      "date": "2025-01-02T00:09:00.000Z"
+    },
+    {
+      "slug": "js-intl-date",
+      "title": "Formatear fechas con Intl",
+      "excerpt": "Usa Intl.DateTimeFormat para formatos locales.",
+      "explain": "1) Creas el formateador con locale y opciones. 2) Llamas a format con un Date. 3) Evita librerías para casos simples.",
+      "content": "const fmt = new Intl.DateTimeFormat('es-ES',{ dateStyle:'medium'});\nconsole.log(fmt.format(new Date()));",
+      "language": "javascript",
+      "tags": [
+        "Intl",
+        "fecha",
+        "i18n"
+      ],
+      "date": "2025-01-02T00:08:00.000Z"
+    },
+    {
+      "slug": "js-try-catch-finally",
+      "title": "try/catch/finally",
+      "excerpt": "Maneja errores y ejecuta limpieza en finally.",
+      "explain": "1) try contiene el código que puede fallar. 2) catch captura el error. 3) finally corre siempre para limpiar recursos.",
+      "content": "try {\n  arr.sort();\n} catch (e) {\n  console.error(e);\n} finally {\n  console.log('listo');\n}",
+      "language": "javascript",
+      "tags": [
+        "errores",
+        "try/catch",
+        "finally"
+      ],
+      "date": "2025-01-02T00:07:00.000Z"
+    },
+    {
+      "slug": "js-fetch-async-await",
+      "title": "Fetch con async/await",
+      "excerpt": "Misma idea que then/catch pero con sintaxis async.",
+      "explain": "1) await espera la promesa. 2) Verificamos response.ok. 3) Parseamos json y manejamos errores con try/catch.",
+      "content": "async function cargar(){\n  try{\n    const r = await fetch('/api/data');\n    if(!r.ok) throw new Error('HTTP '+r.status);\n    const data = await r.json();\n    console.log(data);\n  }catch(e){\n    console.error(e);\n  }\n}",
+      "language": "javascript",
+      "tags": [
+        "fetch",
+        "async",
+        "await"
+      ],
+      "date": "2025-01-02T00:06:00.000Z"
+    },
+    {
+      "slug": "js-reduce-suma",
+      "title": "Suma con reduce",
+      "excerpt": "Reduce un array de números a su suma total.",
+      "explain": "1) reduce itera acumulando. 2) Inicia en 0. 3) Suma cada elemento al acumulador.",
+      "content": "const total = [3,5,7].reduce((acc,n)=>acc+n,0);",
+      "language": "javascript",
+      "tags": [
+        "arrays",
+        "reduce",
+        "matemática"
+      ],
+      "date": "2025-01-02T00:05:00.000Z"
+    },
+    {
+      "slug": "js-nullish",
+      "title": "Nullish coalescing ??",
+      "excerpt": "Provee un valor por defecto solo cuando es null/undefined (no para 0 o '').",
+      "explain": "1) x ?? y devuelve y solo si x es null o undefined. 2) Útil para evitar falsos positivos de || con 0 o ''.",
+      "content": "const limite = config.limite ?? 10;",
+      "language": "javascript",
+      "tags": [
+        "??",
+        "valores por defecto"
+      ],
+      "date": "2025-01-02T00:04:00.000Z"
+    },
+    {
+      "slug": "js-optional-chaining",
+      "title": "Optional chaining ?.",
+      "excerpt": "Accede a propiedades profundas sin errores cuando algo es null/undefined.",
+      "explain": "1) ?. detiene el acceso si el receptor es nullish. 2) Devuelve undefined en vez de lanzar error. 3) Facilita lecturas seguras.",
+      "content": "const ciudad = user?.direccion?.ciudad ?? 'Desconocida';",
+      "language": "javascript",
+      "tags": [
+        "?.",
+        "nullish",
+        "seguridad"
+      ],
+      "date": "2025-01-02T00:03:00.000Z"
+    },
+    {
+      "slug": "js-throttle",
+      "title": "Throttle en JavaScript",
+      "excerpt": "Limita la frecuencia de ejecución de una función.",
+      "explain": "1) throttle recuerda el último tiempo ejecutado. 2) Ignora llamadas hasta cumplir el intervalo. 3) Útil para scroll y resize.",
+      "content": "function throttle(fn, wait=200){\n  let last=0;\n  return (...args)=>{\n    const now=Date.now();\n    if(now-last>=wait){ last=now; fn(...args); }\n  };\n}\nwindow.addEventListener('scroll', throttle(()=>{/* ... */}, 200));",
+      "language": "javascript",
+      "tags": [
+        "throttle",
+        "scroll",
+        "resize"
+      ],
+      "date": "2025-01-02T00:02:00.000Z"
+    },
+    {
+      "slug": "js-debounce",
+      "title": "Debounce en JavaScript",
+      "excerpt": "Evita ejecutar una función muchas veces seguidas, esperando a que el usuario termine.",
+      "explain": "1) debounce crea un temporizador. 2) Cada llamada limpia el anterior. 3) Solo se ejecuta tras el tiempo de espera sin nuevas llamadas.",
+      "content": "function debounce(fn, wait=300){\n  let t;\n  return (...args)=>{\n    clearTimeout(t);\n    t=setTimeout(()=>fn(...args), wait);\n  };\n}\nconst onInput = debounce((v)=>console.log('buscar', v), 400);",
+      "language": "javascript",
+      "tags": [
+        "debounce",
+        "eventos",
+        "rendimiento"
+      ],
+      "date": "2025-01-02T00:01:00.000Z"
+    },
+    {
       "slug": "js-fetch-basico",
       "title": "Cómo hacer un fetch en JavaScript",
       "excerpt": "Aprende a consumir una API con fetch y manejar respuestas y errores de forma sencilla.",
       "explain": "1) Llamamos fetch con una URL. 2) Verificamos r.ok para capturar errores HTTP. 3) Convertimos la respuesta a JSON con r.json(). 4) Encadenamos .then para usar los datos y .catch para manejar errores de red o de la conversión.",
       "content": "fetch('https://api.example.com/users')\n  .then(r => { if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })\n  .then(data => console.log(data))\n  .catch(err => console.error(err));",
       "language": "javascript",
-      "tags": ["api", "fetch", "promesas"],
+      "tags": [
+        "api",
+        "fetch",
+        "promesas"
+      ],
       "date": "2025-01-01T09:00:00.000Z"
     },
     {
@@ -17,7 +464,11 @@
       "explain": "1) Definimos un patrón regex básico para estructura usuario@dominio.tld. 2) es_email usa re.match para evaluar el string. 3) Devuelve True/False según si coincide. 4) Mostramos un ejemplo práctico por consola.",
       "content": "import re\npattern = r'^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$'\ndef es_email(s: str) -> bool:\n    return re.match(pattern, s) is not None\nprint(es_email('hola@ejemplo.com'))\n",
       "language": "python",
-      "tags": ["regex", "validación", "strings"],
+      "tags": [
+        "regex",
+        "validación",
+        "strings"
+      ],
       "date": "2024-12-31T05:00:00.000Z"
     },
     {
@@ -27,7 +478,12 @@
       "explain": "Opción Grid: un contenedor .center usa display:grid y place-items:center. Opción Flex: .wrapper usa display:flex con align-items y justify-content en center. Ambas establecen alto mínimo para centrar verticalmente.",
       "content": ".center { display: grid; place-items: center; min-height: 100vh; }\n/* o */\n.wrapper { display:flex; align-items:center; justify-content:center; min-height:100vh; }",
       "language": "css",
-      "tags": ["css", "layout", "flexbox", "grid"],
+      "tags": [
+        "css",
+        "layout",
+        "flexbox",
+        "grid"
+      ],
       "date": "2024-12-30T01:00:00.000Z"
     },
     {
@@ -37,7 +493,11 @@
       "explain": "1) Definimos un tipo User con id y name. 2) Creamos un objeto que respeta ese contrato. 3) Typamos una función square para asegurar que recibe y devuelve number.",
       "content": "type User = { id:number; name:string }\nconst u: User = { id: 1, name: 'Ana' }\nfunction square(n: number): number { return n*n }",
       "language": "ts",
-      "tags": ["typescript", "tipos", "funciones"],
+      "tags": [
+        "typescript",
+        "tipos",
+        "funciones"
+      ],
       "date": "2024-12-25T10:00:00.000Z"
     },
     {
@@ -47,7 +507,11 @@
       "explain": "1) Importamos express y creamos app. 2) Definimos una ruta GET /api/ping que responde JSON. 3) Levantamos el servidor con listen. 4) Esto ilustra el esqueleto mínimo de una API.",
       "content": "import express from 'express'\nconst app = express()\napp.get('/api/ping', (req,res)=> res.json({ ok:true }))\napp.listen(3000)\n",
       "language": "node",
-      "tags": ["node", "express", "api"],
+      "tags": [
+        "node",
+        "express",
+        "api"
+      ],
       "date": "2024-12-24T03:00:00.000Z"
     },
     {
@@ -57,335 +521,12 @@
       "explain": "1) Tenemos un array base. 2) Usamos map para iterar y transformar cada elemento (n*2). 3) El resultado es un nuevo array sin mutar el original.",
       "content": "const arr = [1,2,3]\nconst dobles = arr.map(n => n*2)\nconsole.log(dobles)",
       "language": "javascript",
-      "tags": ["arrays", "map", "funcional"],
+      "tags": [
+        "arrays",
+        "map",
+        "funcional"
+      ],
       "date": "2024-12-23T12:00:00.000Z"
-    },
-
-    {
-      "slug": "js-debounce",
-      "title": "Debounce en JavaScript",
-      "excerpt": "Evita ejecutar una función muchas veces seguidas, esperando a que el usuario termine.",
-      "explain": "1) debounce crea un temporizador. 2) Cada llamada limpia el anterior. 3) Solo se ejecuta tras el tiempo de espera sin nuevas llamadas.",
-      "content": "function debounce(fn, wait=300){\n  let t;\n  return (...args)=>{\n    clearTimeout(t);\n    t=setTimeout(()=>fn(...args), wait);\n  };\n}\nconst onInput = debounce((v)=>console.log('buscar', v), 400);",
-      "language": "javascript",
-      "tags": ["debounce", "eventos", "rendimiento"],
-      "date": "2025-01-02T00:01:00.000Z"
-    },
-    {
-      "slug": "js-throttle",
-      "title": "Throttle en JavaScript",
-      "excerpt": "Limita la frecuencia de ejecución de una función.",
-      "explain": "1) throttle recuerda el último tiempo ejecutado. 2) Ignora llamadas hasta cumplir el intervalo. 3) Útil para scroll y resize.",
-      "content": "function throttle(fn, wait=200){\n  let last=0;\n  return (...args)=>{\n    const now=Date.now();\n    if(now-last>=wait){ last=now; fn(...args); }\n  };\n}\nwindow.addEventListener('scroll', throttle(()=>{/* ... */}, 200));",
-      "language": "javascript",
-      "tags": ["throttle", "scroll", "resize"],
-      "date": "2025-01-02T00:02:00.000Z"
-    },
-    {
-      "slug": "js-optional-chaining",
-      "title": "Optional chaining ?.",
-      "excerpt": "Accede a propiedades profundas sin errores cuando algo es null/undefined.",
-      "explain": "1) ?. detiene el acceso si el receptor es nullish. 2) Devuelve undefined en vez de lanzar error. 3) Facilita lecturas seguras.",
-      "content": "const ciudad = user?.direccion?.ciudad ?? 'Desconocida';",
-      "language": "javascript",
-      "tags": ["?.", "nullish", "seguridad"],
-      "date": "2025-01-02T00:03:00.000Z"
-    },
-    {
-      "slug": "js-nullish",
-      "title": "Nullish coalescing ??",
-      "excerpt": "Provee un valor por defecto solo cuando es null/undefined (no para 0 o '').",
-      "explain": "1) x ?? y devuelve y solo si x es null o undefined. 2) Útil para evitar falsos positivos de || con 0 o ''.",
-      "content": "const limite = config.limite ?? 10;",
-      "language": "javascript",
-      "tags": ["??", "valores por defecto"],
-      "date": "2025-01-02T00:04:00.000Z"
-    },
-    {
-      "slug": "js-reduce-suma",
-      "title": "Suma con reduce",
-      "excerpt": "Reduce un array de números a su suma total.",
-      "explain": "1) reduce itera acumulando. 2) Inicia en 0. 3) Suma cada elemento al acumulador.",
-      "content": "const total = [3,5,7].reduce((acc,n)=>acc+n,0);",
-      "language": "javascript",
-      "tags": ["arrays", "reduce", "matemática"],
-      "date": "2025-01-02T00:05:00.000Z"
-    },
-    {
-      "slug": "js-fetch-async-await",
-      "title": "Fetch con async/await",
-      "excerpt": "Misma idea que then/catch pero con sintaxis async.",
-      "explain": "1) await espera la promesa. 2) Verificamos response.ok. 3) Parseamos json y manejamos errores con try/catch.",
-      "content": "async function cargar(){\n  try{\n    const r = await fetch('/api/data');\n    if(!r.ok) throw new Error('HTTP '+r.status);\n    const data = await r.json();\n    console.log(data);\n  }catch(e){\n    console.error(e);\n  }\n}",
-      "language": "javascript",
-      "tags": ["fetch", "async", "await"],
-      "date": "2025-01-02T00:06:00.000Z"
-    },
-    {
-      "slug": "js-try-catch-finally",
-      "title": "try/catch/finally",
-      "excerpt": "Maneja errores y ejecuta limpieza en finally.",
-      "explain": "1) try contiene el código que puede fallar. 2) catch captura el error. 3) finally corre siempre para limpiar recursos.",
-      "content": "try {\n  arr.sort();\n} catch (e) {\n  console.error(e);\n} finally {\n  console.log('listo');\n}",
-      "language": "javascript",
-      "tags": ["errores", "try/catch", "finally"],
-      "date": "2025-01-02T00:07:00.000Z"
-    },
-    {
-      "slug": "js-intl-date",
-      "title": "Formatear fechas con Intl",
-      "excerpt": "Usa Intl.DateTimeFormat para formatos locales.",
-      "explain": "1) Creas el formateador con locale y opciones. 2) Llamas a format con un Date. 3) Evita librerías para casos simples.",
-      "content": "const fmt = new Intl.DateTimeFormat('es-ES',{ dateStyle:'medium'});\nconsole.log(fmt.format(new Date()));",
-      "language": "javascript",
-      "tags": ["Intl", "fecha", "i18n"],
-      "date": "2025-01-02T00:08:00.000Z"
-    },
-
-    {
-      "slug": "ts-partial",
-      "title": "Utility type Partial",
-      "excerpt": "Vuelve opcionales todas las propiedades de un tipo.",
-      "explain": "1) Partial<T> mapea las keys de T como opcionales. 2) Útil para updates parciales en funciones.",
-      "content": "type User = { id:number; name:string; email:string };\nfunction updateUser(id:number, patch: Partial<User>) {/* ... */}",
-      "language": "ts",
-      "tags": ["typescript", "utility types", "Partial"],
-      "date": "2025-01-02T00:09:00.000Z"
-    },
-    {
-      "slug": "ts-pick",
-      "title": "Utility type Pick",
-      "excerpt": "Elige un subconjunto de propiedades de un tipo.",
-      "explain": "1) Pick<T, K> crea un tipo con solo keys K. 2) Reduce la superficie expuesta en APIs.",
-      "content": "type User = { id:number; name:string; email:string };\ntype PublicUser = Pick<User,'id'|'name'>;",
-      "language": "ts",
-      "tags": ["typescript", "Pick"],
-      "date": "2025-01-02T00:10:00.000Z"
-    },
-    {
-      "slug": "ts-record",
-      "title": "Record como diccionario",
-      "excerpt": "Crea mapas tipados con claves y valores específicos.",
-      "explain": "1) Record<K,V> define un objeto con claves K y valores V. 2) Evita any en mapas.",
-      "content": "type Roles = 'admin'|'user';\nconst perms: Record<Roles, string[]> = { admin:['*'], user:['read'] };",
-      "language": "ts",
-      "tags": ["typescript", "Record", "mapas"],
-      "date": "2025-01-02T00:11:00.000Z"
-    },
-    {
-      "slug": "ts-narrowing",
-      "title": "Type narrowing",
-      "excerpt": "Usa typeof/in para acotar tipos en runtime.",
-      "explain": "1) Comprueba typeof o 'in'. 2) TypeScript reduce el tipo posible dentro del bloque.",
-      "content": "function len(x:string|string[]){\n  return typeof x==='string' ? x.length : x.length;\n}",
-      "language": "ts",
-      "tags": ["typescript", "narrowing"],
-      "date": "2025-01-02T00:12:00.000Z"
-    },
-    {
-      "slug": "ts-zod-parse",
-      "title": "Validar con Zod",
-      "excerpt": "Valida datos y obtén tipos inferidos.",
-      "explain": "1) Define un esquema. 2) parse valida y retorna el tipo. 3) safeParse no lanza errores.",
-      "content": "import { z } from 'zod';\nconst User = z.object({ id:z.number(), name:z.string() });\nconst u = User.parse({ id:1, name:'Ana' });",
-      "language": "ts",
-      "tags": ["zod", "validación", "tipado"],
-      "date": "2025-01-02T00:13:00.000Z"
-    },
-
-    {
-      "slug": "node-dotenv",
-      "title": "Cargar variables con dotenv",
-      "excerpt": "Gestiona secretos desde .env en desarrollo.",
-      "explain": "1) Instala dotenv. 2) Llama a config temprano. 3) Lee process.env.MI_VAR.",
-      "content": "import 'dotenv/config';\nconsole.log(process.env.NODE_ENV);",
-      "language": "node",
-      "tags": ["dotenv", "env", "config"],
-      "date": "2025-01-02T00:14:00.000Z"
-    },
-    {
-      "slug": "node-logger-middleware",
-      "title": "Middleware de logger en Express",
-      "excerpt": "Registra método y ruta de cada request.",
-      "explain": "1) Define una función (req,res,next). 2) Loguea datos útiles. 3) Llama next() para continuar.",
-      "content": "import express from 'express';\nconst app = express();\napp.use((req,_res,next)=>{\n  console.log(req.method, req.path);\n  next();\n});",
-      "language": "node",
-      "tags": ["express", "middleware", "logging"],
-      "date": "2025-01-02T00:15:00.000Z"
-    },
-    {
-      "slug": "node-path-join",
-      "title": "path.join para rutas seguras",
-      "excerpt": "Une segmentos de ruta sin errores de separadores.",
-      "explain": "1) Usa path.join en vez de concatenar strings. 2) Asegura compatibilidad cross-OS.",
-      "content": "import path from 'node:path';\nconst p = path.join(process.cwd(),'public','data');",
-      "language": "node",
-      "tags": ["node", "path", "fs"],
-      "date": "2025-01-02T00:16:00.000Z"
-    },
-    {
-      "slug": "node-fetch-nativo",
-      "title": "fetch nativo en Node 18+",
-      "excerpt": "Usa fetch sin dependencias externas.",
-      "explain": "1) Disponible desde Node 18. 2) Igual API que en el navegador. 3) Maneja errores HTTP manualmente.",
-      "content": "const r = await fetch('https://api.github.com');\nif(!r.ok) throw new Error('HTTP '+r.status);\nconst data = await r.json();",
-      "language": "node",
-      "tags": ["node", "fetch"],
-      "date": "2025-01-02T00:17:00.000Z"
-    },
-
-    {
-      "slug": "css-clamp",
-      "title": "Tipografía fluida con clamp",
-      "excerpt": "Escala la fuente entre un mínimo y máximo.",
-      "explain": "1) clamp(min, preferido, max). 2) Usa unidades vw para el preferido. 3) Garantiza legibilidad.",
-      "content": "h1 { font-size: clamp(1.5rem, 3vw, 2.5rem); }",
-      "language": "css",
-      "tags": ["css", "tipografía", "clamp"],
-      "date": "2025-01-02T00:18:00.000Z"
-    },
-    {
-      "slug": "css-container-queries",
-      "title": "Container queries básicas",
-      "excerpt": "Estilos según el tamaño del contenedor, no de la ventana.",
-      "explain": "1) Declara container-type en el padre. 2) Usa @container (min-width:...). 3) Componente más autónomo.",
-      "content": ".card { container-type: inline-size; }\n@container (min-width: 500px) { .card { display:grid; grid-template-columns:1fr 1fr; } }",
-      "language": "css",
-      "tags": ["css", "container queries", "responsive"],
-      "date": "2025-01-02T00:19:00.000Z"
-    },
-    {
-      "slug": "css-grid-auto-fit",
-      "title": "Grid responsive con auto-fit",
-      "excerpt": "Rejilla automática con minmax y auto-fit.",
-      "explain": "1) Usa repeat(auto-fit, minmax()). 2) Las columnas se adaptan al ancho.",
-      "content": ".grid {\n  display:grid;\n  grid-template-columns: repeat(auto-fit, minmax(220px,1fr));\n  gap:1rem;\n}",
-      "language": "css",
-      "tags": ["css", "grid", "responsive"],
-      "date": "2025-01-02T00:20:00.000Z"
-    },
-    {
-      "slug": "css-sticky-header",
-      "title": "Header sticky",
-      "excerpt": "Mantén un encabezado visible al hacer scroll.",
-      "explain": "1) position:sticky y top:0. 2) fondo opaco y border-bottom para contraste.",
-      "content": "header { position: sticky; top: 0; background: white; border-bottom:1px solid #eee; }",
-      "language": "css",
-      "tags": ["css", "sticky", "layout"],
-      "date": "2025-01-02T00:21:00.000Z"
-    },
-    {
-      "slug": "css-center-absolute",
-      "title": "Centrar absoluto con transform",
-      "excerpt": "Técnica clásica para centrar elementos absolutamente posicionados.",
-      "explain": "1) left/top 50%. 2) translate(-50%,-50%) para corregir.",
-      "content": ".box { position:absolute; left:50%; top:50%; transform: translate(-50%,-50%); }",
-      "language": "css",
-      "tags": ["css", "centrado", "position"],
-      "date": "2025-01-02T00:22:00.000Z"
-    },
-
-    {
-      "slug": "html-semantica-sectioning",
-      "title": "Etiquetas semánticas de seccionado",
-      "excerpt": "Mejora SEO y accesibilidad con section, article, header, footer.",
-      "explain": "1) Usa section/article para bloques temáticos. 2) header/footer para cabeceras y pies. 3) Asiste a lectores de pantalla.",
-      "content": "<article>\n  <header><h2>Título</h2></header>\n  <p>Contenido...</p>\n  <footer>Autor</footer>\n</article>",
-      "language": "html",
-      "tags": ["html", "semántica", "seo"],
-      "date": "2025-01-02T00:23:00.000Z"
-    },
-    {
-      "slug": "html-boton-accesible",
-      "title": "Botón accesible real",
-      "excerpt": "No uses divs clicables; usa <button> con atributos correctos.",
-      "explain": "1) Emplea <button> para acciones. 2) Asegura label descriptivo. 3) Gestiona disabled y type.",
-      "content": "<button type=\"button\" aria-label=\"Abrir menú\">☰</button>",
-      "language": "html",
-      "tags": ["html", "accesibilidad", "button"],
-      "date": "2025-01-02T00:24:00.000Z"
-    },
-
-    {
-      "slug": "py-list-comprehension",
-      "title": "List comprehension",
-      "excerpt": "Crea listas a partir de iterables en una línea.",
-      "explain": "1) [expr for x in iterable]. 2) Condición opcional al final. 3) Código conciso y legible.",
-      "content": "cuadrados = [n*n for n in range(5)]\nprint(cuadrados)",
-      "language": "python",
-      "tags": ["python", "listas", "comprensión"],
-      "date": "2025-01-02T00:25:00.000Z"
-    },
-    {
-      "slug": "py-fstring",
-      "title": "f-strings",
-      "excerpt": "Interpolación de cadenas moderna en Python.",
-      "explain": "1) Prefija con f. 2) Usa {expr} dentro del string. 3) Permite formateo como :.2f.",
-      "content": "nombre = 'Ana'\nprint(f'Hola, {nombre}!')",
-      "language": "python",
-      "tags": ["python", "strings", "format"],
-      "date": "2025-01-02T00:26:00.000Z"
-    },
-    {
-      "slug": "py-with",
-      "title": "with como context manager",
-      "excerpt": "Asegura cierre de recursos automáticamente.",
-      "explain": "1) with abre el contexto. 2) Al salir cierra el recurso. 3) Evita leaks.",
-      "content": "with open('datos.txt') as f:\n    contenido = f.read()",
-      "language": "python",
-      "tags": ["python", "archivos", "context"],
-      "date": "2025-01-02T00:27:00.000Z"
-    },
-    {
-      "slug": "py-dict-merge",
-      "title": "Unir diccionarios",
-      "excerpt": "Fusiona dicts con | en Python 3.9+.",
-      "explain": "1) Usa a | b para unir. 2) Para actualización in-place, a |= b.",
-      "content": "a = {'x':1}\nb = {'y':2}\nc = a | b",
-      "language": "python",
-      "tags": ["python", "dict", "merge"],
-      "date": "2025-01-02T00:28:00.000Z"
-    },
-    {
-      "slug": "py-requests-get",
-      "title": "GET con requests",
-      "excerpt": "Realiza peticiones HTTP de forma sencilla.",
-      "explain": "1) requests.get(URL). 2) Comprueba status_code. 3) Usa .json() si devuelve JSON.",
-      "content": "import requests\nr = requests.get('https://api.github.com')\nprint(r.status_code)\nprint(r.json().get('current_user_url'))",
-      "language": "python",
-      "tags": ["http", "requests", "api"],
-      "date": "2025-01-02T00:29:00.000Z"
-    },
-
-    {
-      "slug": "js-localstorage-json",
-      "title": "Guardar JSON en localStorage",
-      "excerpt": "Serializa con JSON.stringify y parsea con JSON.parse.",
-      "explain": "1) stringify para guardar. 2) parse al leer. 3) Maneja errores con try/catch.",
-      "content": "localStorage.setItem('cfg', JSON.stringify({ tema:'claro' }));\nconst cfg = JSON.parse(localStorage.getItem('cfg')||'{}');",
-      "language": "javascript",
-      "tags": ["storage", "json", "web"],
-      "date": "2025-01-02T00:30:00.000Z"
-    },
-    {
-      "slug": "js-urlsearchparams",
-      "title": "URLSearchParams",
-      "excerpt": "Construye query strings de forma segura.",
-      "explain": "1) Añade pares clave-valor. 2) Usa toString() para la URL.",
-      "content": "const qs = new URLSearchParams({ q:'react', page:'1' });\nconst url = '/buscar?'+qs.toString();",
-      "language": "javascript",
-      "tags": ["url", "querystring"],
-      "date": "2025-01-02T00:31:00.000Z"
-    },
-    {
-      "slug": "js-custom-event",
-      "title": "CustomEvent para comunicación",
-      "excerpt": "Emite eventos personalizados entre componentes sueltos.",
-      "explain": "1) Crea CustomEvent con detail. 2) dispatchEvent en window o nodo. 3) addEventListener para escuchar.",
-      "content": "const ev = new CustomEvent('notificar', { detail:{ msg:'hola' } });\nwindow.dispatchEvent(ev);\nwindow.addEventListener('notificar', (e)=>console.log(e.detail));",
-      "language": "javascript",
-      "tags": ["eventos", "CustomEvent", "arquitectura"],
-      "date": "2025-01-02T00:32:00.000Z"
     }
   ]
 }
