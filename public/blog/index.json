@@ -3,7 +3,7 @@
     {
       "slug": "guia-completa-seguridad-en-la-cadena-de-suministro-de-software-1756845710309",
       "title": "Guía completa: Seguridad en la cadena de suministro de software | Edukoder Blog",
-      "date": "2025-09-08T08:48:40.969Z",
+      "date": "2025-09-15T08:44:07.573Z",
       "tags": [],
       "excerpt": "Guía completa sobre seguridad en la cadena de suministro de software. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para implem…",
       "imageUrl": "",
@@ -14,7 +14,7 @@
     {
       "slug": "guia-completa-patrones-de-diseno-avanzados-en-aplicaciones-empresariales-con-react-1756845703573",
       "title": "Guía completa: Patrones de diseño avanzados en aplicaciones empresariales con React | Edukoder Blog",
-      "date": "2025-09-08T08:48:40.969Z",
+      "date": "2025-09-15T08:44:07.573Z",
       "tags": [],
       "excerpt": "Guía completa sobre patrones de diseño avanzados en aplicaciones empresariales con react. Aprende los conceptos fundamentales, mejores prácticas y ejemplos p…",
       "imageUrl": "",
@@ -25,7 +25,7 @@
     {
       "slug": "guia-completa-patrones-de-acceso-a-datos-repository-dao-y-mas-1756845707327",
       "title": "Guía completa: Patrones de acceso a datos: Repository, DAO y más | Edukoder Blog",
-      "date": "2025-09-08T08:48:40.968Z",
+      "date": "2025-09-15T08:44:07.573Z",
       "tags": [],
       "excerpt": "Guía completa sobre patrones de acceso a datos: repository, dao y más. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para imple…",
       "imageUrl": "",
@@ -36,7 +36,7 @@
     {
       "slug": "guia-completa-manejo-avanzado-de-errores-y-logging-en-produccion-1756869502296",
       "title": "Guía completa: Manejo avanzado de errores y logging en producción | Edukoder Blog",
-      "date": "2025-09-08T08:48:40.968Z",
+      "date": "2025-09-15T08:44:07.573Z",
       "tags": [],
       "excerpt": "Guía completa sobre manejo avanzado de errores y logging en producción. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para impl…",
       "imageUrl": "",
@@ -45,9 +45,20 @@
       "link": "/blog/guia-completa-manejo-avanzado-de-errores-y-logging-en-produccion-1756869502296.html"
     },
     {
+      "slug": "guia-completa-infraestructura-como-codigo-con-terraform-patrones-avanzados-1757925845830",
+      "title": "Guía completa: Infraestructura como código con Terraform: Patrones avanzados | Edukoder Blog",
+      "date": "2025-09-15T08:44:07.572Z",
+      "tags": [],
+      "excerpt": "Guía completa sobre infraestructura como código con terraform: patrones avanzados. Aprende los conceptos fundamentales, mejores prácticas y ejemplos práctico…",
+      "imageUrl": "",
+      "imageAlt": "",
+      "author": "",
+      "link": "/blog/guia-completa-infraestructura-como-codigo-con-terraform-patrones-avanzados-1757925845830.html"
+    },
+    {
       "slug": "guia-completa-estrategias-de-testing-en-aplicaciones-modernas-1757321319624",
       "title": "Guía completa: Estrategias de testing en aplicaciones modernas | Edukoder Blog",
-      "date": "2025-09-08T08:48:40.967Z",
+      "date": "2025-09-15T08:44:07.572Z",
       "tags": [],
       "excerpt": "Guía completa sobre estrategias de testing en aplicaciones modernas. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para impleme…",
       "imageUrl": "",
