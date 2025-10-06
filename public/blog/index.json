@@ -1,9 +1,20 @@
 {
   "articles": [
     {
+      "slug": "guia-completa-web-components-creando-bibliotecas-de-componentes-reutilizables-1759738404562",
+      "title": "Guía completa: Web Components: Creando bibliotecas de componentes reutilizables | Edukoder Blog",
+      "date": "2025-10-06T08:13:25.836Z",
+      "tags": [],
+      "excerpt": "Guía completa sobre web components: creando bibliotecas de componentes reutilizables. Aprende los conceptos fundamentales, mejores prácticas y ejemplos práct…",
+      "imageUrl": "",
+      "imageAlt": "",
+      "author": "",
+      "link": "/blog/guia-completa-web-components-creando-bibliotecas-de-componentes-reutilizables-1759738404562.html"
+    },
+    {
       "slug": "guia-completa-web-components-creando-bibliotecas-de-componentes-reutilizables-1759135781924",
       "title": "Guía completa: Web Components: Creando bibliotecas de componentes reutilizables | Edukoder Blog",
-      "date": "2025-09-29T08:49:43.544Z",
+      "date": "2025-10-06T08:13:25.836Z",
       "tags": [],
       "excerpt": "Guía completa sobre web components: creando bibliotecas de componentes reutilizables. Aprende los conceptos fundamentales, mejores prácticas y ejemplos práct…",
       "imageUrl": "",
@@ -14,7 +25,7 @@
     {
       "slug": "guia-completa-seguridad-en-la-cadena-de-suministro-de-software-1756845710309",
       "title": "Guía completa: Seguridad en la cadena de suministro de software | Edukoder Blog",
-      "date": "2025-09-29T08:49:43.544Z",
+      "date": "2025-10-06T08:13:25.836Z",
       "tags": [],
       "excerpt": "Guía completa sobre seguridad en la cadena de suministro de software. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para implem…",
       "imageUrl": "",
@@ -25,7 +36,7 @@
     {
       "slug": "guia-completa-pruebas-de-integracion-estrategias-y-mejores-practicas-1758530854689",
       "title": "Guía completa: Pruebas de integración: Estrategias y mejores prácticas | Edukoder Blog",
-      "date": "2025-09-29T08:49:43.544Z",
+      "date": "2025-10-06T08:13:25.835Z",
       "tags": [],
       "excerpt": "Guía completa sobre pruebas de integración: estrategias y mejores prácticas. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para…",
       "imageUrl": "",
@@ -36,7 +47,7 @@
     {
       "slug": "guia-completa-patrones-de-diseno-avanzados-en-aplicaciones-empresariales-con-react-1756845703573",
       "title": "Guía completa: Patrones de diseño avanzados en aplicaciones empresariales con React | Edukoder Blog",
-      "date": "2025-09-29T08:49:43.543Z",
+      "date": "2025-10-06T08:13:25.835Z",
       "tags": [],
       "excerpt": "Guía completa sobre patrones de diseño avanzados en aplicaciones empresariales con react. Aprende los conceptos fundamentales, mejores prácticas y ejemplos p…",
       "imageUrl": "",
@@ -47,7 +58,7 @@
     {
       "slug": "guia-completa-patrones-de-acceso-a-datos-repository-dao-y-mas-1756845707327",
       "title": "Guía completa: Patrones de acceso a datos: Repository, DAO y más | Edukoder Blog",
-      "date": "2025-09-29T08:49:43.542Z",
+      "date": "2025-10-06T08:13:25.835Z",
       "tags": [],
       "excerpt": "Guía completa sobre patrones de acceso a datos: repository, dao y más. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para imple…",
       "imageUrl": "",
@@ -58,7 +69,7 @@
     {
       "slug": "guia-completa-manejo-avanzado-de-errores-y-logging-en-produccion-1756869502296",
       "title": "Guía completa: Manejo avanzado de errores y logging en producción | Edukoder Blog",
-      "date": "2025-09-29T08:49:43.542Z",
+      "date": "2025-10-06T08:13:25.835Z",
       "tags": [],
       "excerpt": "Guía completa sobre manejo avanzado de errores y logging en producción. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para impl…",
       "imageUrl": "",
@@ -69,7 +80,7 @@
     {
       "slug": "guia-completa-infraestructura-como-codigo-con-terraform-patrones-avanzados-1757925845830",
       "title": "Guía completa: Infraestructura como código con Terraform: Patrones avanzados | Edukoder Blog",
-      "date": "2025-09-29T08:49:43.542Z",
+      "date": "2025-10-06T08:13:25.834Z",
       "tags": [],
       "excerpt": "Guía completa sobre infraestructura como código con terraform: patrones avanzados. Aprende los conceptos fundamentales, mejores prácticas y ejemplos práctico…",
       "imageUrl": "",
@@ -80,7 +91,7 @@
     {
       "slug": "guia-completa-estrategias-de-testing-en-aplicaciones-modernas-1757321319624",
       "title": "Guía completa: Estrategias de testing en aplicaciones modernas | Edukoder Blog",
-      "date": "2025-09-29T08:49:43.542Z",
+      "date": "2025-10-06T08:13:25.834Z",
       "tags": [],
       "excerpt": "Guía completa sobre estrategias de testing en aplicaciones modernas. Aprende los conceptos fundamentales, mejores prácticas y ejemplos prácticos para impleme…",
       "imageUrl": "",
