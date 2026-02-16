@@ -2,137 +2,142 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://edukoder.com/blog/guia-completa-arquitectura-basada-en-microservicios-de-la-teoria-a-la-practica-1764576964335.html</loc>
-    <lastmod>2026-02-16T07:52:05.979Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.818Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-arquitecturas-limpias-principios-y-patrones-avanzados-1770626126732.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-bases-de-datos-nosql-cuando-usarlas-y-mejores-practicas-1770020920826.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-computer-vision-en-el-navegador-posibilidades-y-limitaciones-1761552858357.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-contrato-de-pruebas-estrategias-para-microservicios-1765786606635.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-contrato-de-pruebas-estrategias-para-microservicios-1769415402329.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-diseno-de-sistemas-altamente-disponibles-en-la-nube-1763367320246.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-estrategias-avanzadas-de-despliegue-blue-green-canary-y-mas-1768810676198.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-estrategias-de-migracion-a-la-nube-de-monolito-a-microservicios-1763972096671.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-estrategias-de-testing-en-aplicaciones-modernas-1757321319624.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-infraestructura-como-codigo-con-terraform-patrones-avanzados-1757925845830.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-manejo-avanzado-de-errores-y-logging-en-produccion-1756869502296.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-manejo-avanzado-de-errores-y-logging-en-produccion-1765181784023.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://edukoder.com/blog/guia-completa-manejo-avanzado-de-errores-y-logging-en-produccion-1771230750535.html</loc>
+    <lastmod>2026-02-16T08:32:31.090Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-metricas-agiles-mas-alla-de-la-velocidad-1762762499298.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-metricas-agiles-mas-alla-de-la-velocidad-1766996188727.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-modelado-de-datos-para-aplicaciones-de-analisis-y-bi-1766391367564.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-patrones-de-acceso-a-datos-repository-dao-y-mas-1756845707327.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-patrones-de-diseno-avanzados-en-aplicaciones-empresariales-con-react-1756845703573.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-patrones-de-resiliencia-en-sistemas-distribuidos-1767601032262.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-pruebas-de-integracion-estrategias-y-mejores-practicas-1758530854689.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-seguridad-en-el-pipeline-de-ci-cd-mejores-practicas-1760948022464.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-seguridad-en-el-pipeline-de-ci-cd-mejores-practicas-1768205807970.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-seguridad-en-la-cadena-de-suministro-de-software-1756845710309.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-testing-avanzado-en-aplicaciones-react-estrategias-y-herramientas-1760343274279.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-transformacion-agil-retos-y-estrategias-1762157677326.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-web-components-creando-bibliotecas-de-componentes-reutilizables-1759135781924.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://edukoder.com/blog/guia-completa-web-components-creando-bibliotecas-de-componentes-reutilizables-1759738404562.html</loc>
-    <lastmod>2026-02-16T07:52:05.980Z</lastmod>
+    <lastmod>2026-02-16T08:32:23.819Z</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 </urlset>
